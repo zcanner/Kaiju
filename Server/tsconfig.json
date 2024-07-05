@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ESNext",
     "module": "ESNext", /* Specify what module code is generated. */
     // "rootDir": "./",                            
     "moduleResolution": "Node",
@@ -12,6 +12,7 @@
     "forceConsistentCasingInFileNames": true,
     /* Type Checking */
     "strict": true,
+    "alwaysStrict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,

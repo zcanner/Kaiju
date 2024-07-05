@@ -1,13 +1,15 @@
 import { Request, Response } from "express";
 import Joi from "joi";
-import User from "../../schemas/user.schema";
-import generateToken from "../../lib/utils/jsonwebtoken";
+
+import User from "../../schemas/user.schema.js";
+import generateToken from "../../lib/utils/jsonwebtoken.js";
 
 const loginSchema = Joi.object({
   identity: Joi.string().required(),
   password: Joi.string().required(),
 });
-async function login(req: Request, res: Response) {
+
+const login = async (req: Request, res: Response) => {
   const { identity, password } = req.body;
   const { error } = loginSchema.validate({ identity, password });
 
@@ -33,6 +35,6 @@ async function login(req: Request, res: Response) {
     console.log(errorMessage);
     res.status(400).send(errorMessage);
   }
-}
+};
 
 export default login;

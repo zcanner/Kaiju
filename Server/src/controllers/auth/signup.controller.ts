@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import Joi from "joi";
 
-import User from "../../schemas/user.schema";
-import generateToken from "../../lib/utils/jsonwebtoken";
+import User from "../../schemas/user.schema.js";
+import generateToken from "../../lib/utils/jsonwebtoken.js";
 
 /* sign up user data validation schema */
 const userDataSchema = Joi.object({
@@ -21,7 +21,7 @@ interface Ibody {
   password: string;
 }
 
-async function signup(req: Request, res: Response) {
+const signup = async (req: Request, res: Response) => {
   try {
     const data: Ibody = req.body;
 
@@ -39,13 +39,13 @@ async function signup(req: Request, res: Response) {
 
     await user.save();
     generateToken(user._id.toString(), res);
-    res.cookie("token", user._id).send();
+    res.cookie("token", user._id).send("user is created");
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : null;
 
     console.log(errorMessage);
     res.status(400).send(errorMessage);
   }
-}
+};
 
 export default signup;
