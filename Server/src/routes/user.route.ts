@@ -11,9 +11,9 @@ import protectUserMiddleware from "../middlewares/protectUser.middelware.js";
 
 const user = Router();
 
-user.post("/follow", protectedRoute, follow);
+user.post("/follow", protectedRoute, protectUserMiddleware, follow);
 
-user.post("/unfollow", protectedRoute, unfollow);
+user.post("/unfollow", protectedRoute, protectUserMiddleware, unfollow);
 
 user.get("/:user", protectUserMiddleware, getUser);
 

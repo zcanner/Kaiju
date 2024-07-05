@@ -8,12 +8,11 @@ const protectUserMiddleware = async (
   next: NextFunction
 ) => {
   try {
-    const requestedUser = req.params.user;
+    const requestedUser = req.params.user || req.query.u;
     const token = req.cookies.token;
+    res.locals.user = res.locals.user; // idk what iam doing here
 
-    if (!token) {
-      return next();
-    }
+    if (!token) return next();
 
     const decoded = Jwt.verify(
       token,

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 
 import User from "../../schemas/user.schema.js";
+import mongoose from "mongoose";
 
 const blockeUser = async (req: Request, res: Response) => {
   try {
@@ -8,11 +9,52 @@ const blockeUser = async (req: Request, res: Response) => {
     const u = req.query.u;
     if (u === user.username) throw new Error("You cannot block yourself");
 
+    // self explanatory
     const userToBlock = await User.findOne({ username: u });
     if (!userToBlock) throw new Error("User not found");
 
     if (user.blockedUsers.includes(userToBlock._id))
       throw new Error("You are already blocked this user");
+
+    /* before pushing the user into blockedUseers arr
+       lets check if he follows the user to block. */
+
+    if (user.following.includes(userToBlock._id)) {
+      user.following = user.following.filter(
+        (id: mongoose.Types.ObjectId) =>
+          id.toString() !== userToBlock._id.toString()
+      );
+      await user.save();
+    }
+
+    // now lets check if the user to block follows our user
+
+    if (user.followers.includes(userToBlock._id)) {
+      user.followers = user.followers.filter(
+        (id: mongoose.Types.ObjectId) =>
+          id.toString() !== userToBlock._id.toString()
+      );
+      await user.save();
+    }
+
+    /* now lets check if user to block follows our lovely 
+    innocent user who is getting Cyber bullied  */
+
+    if (userToBlock.following.includes(user._id)) {
+      userToBlock.following = userToBlock.following.filter(
+        (id: mongoose.Types.ObjectId) => id.toString() !== user._id.toString()
+      );
+      await userToBlock.save();
+    }
+
+    // now lets check if user to block is followed by our user
+
+    if (userToBlock.followers.includes(user._id)) {
+      userToBlock.followers = userToBlock.followers.filter(
+        (id: mongoose.Types.ObjectId) => id.toString() !== user._id.toString()
+      );
+      await userToBlock.save();
+    }
 
     user.blockedUsers.push(userToBlock._id);
     await user.save();

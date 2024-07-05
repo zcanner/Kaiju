@@ -10,7 +10,6 @@ const follow = async (req: Request, res: Response) => {
     if (u === user.username) throw new Error("You cannot follow yourself");
 
     const userToFollow = await User.findOne({ username: u });
-    console.log(userToFollow);
     if (!userToFollow) throw new Error("User not found");
 
     if (userToFollow.followers.includes(user._id))

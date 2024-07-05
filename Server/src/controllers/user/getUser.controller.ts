@@ -11,7 +11,6 @@ const getUser = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    console.log("User from getUser controller :", userDoc);
     res.status(200).json({ userDoc });
   } catch (error) {
     const errorMessage =
