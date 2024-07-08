@@ -11,5 +11,5 @@ route.use("/auth", auth);
 // user routes
 route.use("/user", user);
 // post routes
-route.use("/post", post);
+route.use("/fun", post);
 export default route;
