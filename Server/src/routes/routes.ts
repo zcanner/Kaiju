@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import auth from "./auth.route.js";
 import user from "./user.route.js";
+import post from "./posts.route.js";
 
 const route = Router();
 
@@ -9,5 +10,6 @@ const route = Router();
 route.use("/auth", auth);
 // user routes
 route.use("/user", user);
-
+// post routes
+route.use("/post", post);
 export default route;

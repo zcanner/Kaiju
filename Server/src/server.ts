@@ -2,6 +2,7 @@ import express from "express";
 import "dotenv/config";
 import cors from "cors";
 import helmet from "helmet";
+import { v2 } from "cloudinary";
 import cookieParser from "cookie-parser";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -24,6 +25,12 @@ app.use(helmet());
 app.use(cookieParser());
 
 connectDB(); // Connect to MongoDB
+
+v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+}); // Cloudinary config
 
 // route
 app.use("/api", route);
