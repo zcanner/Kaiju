@@ -1,6 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import jwt, { JwtPayload } from "jsonwebtoken";
-import User from "../schemas/user.schema.js";
 
 /**
  * Asynchronous function to handle protected routes.

@@ -1,6 +1,9 @@
 import { Router } from "express";
 
-import createPost from "../controllers/posts/createPost.controller.js";
+import {
+  createPost,
+  removePost,
+} from "../controllers/posts/post.controller.js";
 import {
   comment,
   likeComment,
@@ -18,4 +21,6 @@ post.post("/comment:postID", protectedRoute, comment);
 post.post("/post:postID/comment:commentID", protectedRoute, likeComment);
 // delete comment
 post.post("/comment", protectedRoute, deleteComment);
+
+post.post("/remove-post", protectedRoute, removePost);
 export default post;
