@@ -65,4 +65,27 @@ const updatePost = async (req: Request, res: Response) => {
   }
 };
 
-export { createPost, removePost, updatePost };
+const togglePostLike = async (req: Request, res: Response) => {
+  try {
+    const { postID } = req.body;
+    const userID = res.locals.user.id;
+
+    let post = await Post.findOne({ _id: postID });
+    if (!post) return res.status(404).json({ error: "Post not found" });
+
+    if (post.likes.includes(userID)) {
+      post.likes = post.likes.filter((id) => id !== userID);
+    } else {
+      post.likes.push(userID);
+    }
+
+    await post.save();
+    res.status(200).json({ message: "Post liked" });
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Internal server error";
+    res.status(500).json({ error: errorMessage });
+  }
+};
+
+export { createPost, removePost, updatePost, togglePostLike };

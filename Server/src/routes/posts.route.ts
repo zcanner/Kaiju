@@ -4,6 +4,7 @@ import {
   createPost,
   removePost,
   updatePost,
+  togglePostLike,
 } from "../controllers/posts/post.controller.js";
 import {
   comment,
@@ -25,4 +26,6 @@ post.post("/post:postID/comment:commentID", protectedRoute, likeComment);
 post.post("/comment", protectedRoute, deleteComment);
 // remove post
 post.post("/remove-post", protectedRoute, removePost);
+// like-unlike post
+post.post("toggleLike", protectedRoute, togglePostLike);
 export default post;
