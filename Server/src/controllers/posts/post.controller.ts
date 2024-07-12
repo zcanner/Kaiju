@@ -45,12 +45,24 @@ const removePost = async (req: Request, res: Response) => {
 };
 
 const updatePost = async (req: Request, res: Response) => {
+  const updatedData = req.body;
+  const userID = res.locals.user.id;
   try {
-    const { postID, ...data } = req.body;
-    const userID = res.locals.user.id;
+    const { postID } = updatedData;
+    let post = await Post.findOne({ _id: postID });
+    if (!post) return res.status(404).json({ error: "Post not found" });
 
-    const post = await Post.findOne({ _id: postID });
-  } catch (error) {}
+    if (post.author?.toString() !== userID)
+      return res.status(401).json({ error: "Unauthorized" });
+
+    await post.updateOne(updatedData, { runValidators: true });
+    console.log(post);
+    res.status(200).json({ message: "Post updated successfully" });
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Internal server error";
+    res.status(500).json({ error: errorMessage });
+  }
 };
 
 export { createPost, removePost, updatePost };
