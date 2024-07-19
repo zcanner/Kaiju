@@ -27,5 +27,5 @@ post.post("/comment", protectedRoute, deleteComment);
 // remove post
 post.post("/remove-post", protectedRoute, removePost);
 // like-unlike post
-post.post("toggleLike", protectedRoute, togglePostLike);
+post.post("/toggleLike", protectedRoute, togglePostLike);
 export default post;
