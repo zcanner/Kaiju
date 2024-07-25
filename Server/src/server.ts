@@ -20,7 +20,7 @@ const port = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname, "../public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: "*" }));
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(helmet());
 app.use(cookieParser());
 
@@ -37,7 +37,11 @@ app.use("/api", route);
 
 const indexPath = path.join(__dirname, "../public", "index.html");
 app.get("*", (req, res) => {
-  res.sendFile(indexPath);
+  try {
+		res.sendFile(indexPath);
+	} catch (error) {
+		console.log("error from * ",error);
+	}
 });
 
 app.listen(port, () => {

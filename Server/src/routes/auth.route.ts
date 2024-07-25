@@ -13,5 +13,5 @@ const auth = Router();
 auth.post("/signup", authRedirect, signup);
 auth.post("/login", authRedirect, login);
 auth.post("/logout", protectedRoute, logout);
-auth.post("/status", Status)
+auth.get("/status", Status)
 export default auth;
