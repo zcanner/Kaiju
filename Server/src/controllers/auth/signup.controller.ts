@@ -39,7 +39,6 @@ const signup = async (req: Request, res: Response) => {
 
     await user.save();
     generateToken(user._id.toString(), res);
-    res.cookie("token", user._id).send("user is created");
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : null;
 

@@ -8,7 +8,7 @@ const generateToken = (id: string, res: Response) => {
     httpOnly: true,
     sameSite: "strict",
     secure: false, // only send cookie over https
-  });
+  }).json({ message : "successful" }).sendStatus(201);
 };
 
 export default generateToken;

@@ -27,9 +27,6 @@ const login = async (req: Request, res: Response) => {
     if (user.password !== password) throw new Error("password is incorrect");
 
     generateToken(user._id.toString(), res);
-
-    console.log(req.body);
-    res.sendStatus(200);
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : null;
     console.log(errorMessage);
