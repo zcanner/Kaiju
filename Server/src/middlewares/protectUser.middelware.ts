@@ -9,7 +9,7 @@ const protectUserMiddleware = async (
   next: NextFunction
 ) => {
   try {
-    const requestedUser = req.params.user || req.query.u;
+    const requestedUser = req.query.user || req.query.u;
     const token = req.cookies.token;
     if (!token) return next();
 
