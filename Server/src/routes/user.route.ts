@@ -17,7 +17,7 @@ user.post("/follow", protectedRoute, protectUserMiddleware, follow);
 
 user.post("/unfollow", protectedRoute, protectUserMiddleware, unfollow);
 
-user.get("/:user", protectUserMiddleware, getUser);
+user.get("/", protectUserMiddleware, getUser);
 
 user.post("/block", protectedRoute, blockUser);
 
