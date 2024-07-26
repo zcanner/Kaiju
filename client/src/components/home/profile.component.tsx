@@ -1,5 +1,4 @@
 import { BsThreeDots } from "react-icons/bs";
-import Posts from "./post.component";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
@@ -52,7 +51,10 @@ const Profile = () => {
         <div className="avatar">
           <div className="w-28 h-28 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-32 lg:h-32 rounded-full">
             <img
-              src={data?.userDoc.profileimg}
+              src={
+                data?.userDoc.profileimg ||
+                "https://avatars.githubusercontent.com/u/112796674?v=4"
+              }
               alt="Profile"
               className="w-full h-full object-cover rounded-full"
             />
@@ -92,9 +94,6 @@ const Profile = () => {
             </button>
           </div>
         </div>
-      </div>
-      <div>
-        <Posts />
       </div>
     </div>
   );

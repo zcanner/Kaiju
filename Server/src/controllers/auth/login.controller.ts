@@ -29,7 +29,7 @@ const login = async (req: Request, res: Response) => {
     generateToken(user._id.toString(), res);
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : null;
-    console.log(errorMessage);
+    console.log("error message from login controller", errorMessage);
     res.status(400).send(errorMessage);
   }
 };
