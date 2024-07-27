@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import axios from "axios";
 
 import { RiVerifiedBadgeFill } from "react-icons/ri";
+import { useUser } from "../../lib/hooks/getUser";
 
 const Profile = () => {
   const { username } = useParams();
@@ -32,6 +33,8 @@ const Profile = () => {
       }
     },
   });
+
+  const { data: user } = useUser();
 
   useEffect(() => {
     refetch();
@@ -98,12 +101,20 @@ const Profile = () => {
             <p>{data?.userDoc.bio}</p>
           </div>
           <div className="py-2 flex gap-3 w-full">
-            <button className="btn btn-md btn-circle border-none btn-primary w-[35%]">
-              Follow
-            </button>
-            <button className="btn btn-md btn-circle ghost bg-transparent w-[35%]">
-              Message
-            </button>
+            {user?._id === data?.userDoc._id ? (
+              <>
+                <button className="btn btn-md btn-circle border-none btn-primary w-[35%]">
+                  Follow
+                </button>
+                <button className="btn btn-md btn-circle ghost bg-transparent w-[35%]">
+                  Message
+                </button>
+              </>
+            ) : (
+              <button className="btn btn-circle btn-md w-full bg-white text-black max-w-40 hover:bg-transparent hover:border-white hover:text-white">
+                Edit Profile
+              </button>
+            )}
           </div>
         </div>
       </div>
