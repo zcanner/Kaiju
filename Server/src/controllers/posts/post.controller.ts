@@ -1,29 +1,54 @@
 import { Request, Response } from "express";
 
-import Post from "../../schemas/posts.schema.js";
 import { v2 } from "cloudinary";
+import sharp from "sharp";
+
+import Post from "../../schemas/posts.schema.js";
 import User from "../../schemas/user.schema.js";
 
 const createPost = async (req: Request, res: Response) => {
   try {
-    const data = req.body;
+    const { text, img } = req.body; // Extract content and img from req.body
     const user = res.locals.user._id;
-    let newPost = new Post({ ...data, author: user });
 
-    const Author = await user.findById(user);
+    // Create new post with correct fields
+    let newPost = new Post({
+      content: text, // Set the content field
+      author: user,
+    });
+
+    const Author = await User.findById(user);
     if (!Author) return res.status(404).json({ error: "User not found" });
 
     Author.posts.push(newPost._id);
 
-    if (data.image) {
-      const resImage = await v2.uploader.upload(data.image, {
-        folder: "KAIJU/Posts/",
+    if (img) {
+      const buffer = Buffer.from(img.split(",")[1], "base64");
+
+      const processedImageBuffer = await sharp(buffer)
+        .webp({ quality: 80 })
+        .toBuffer();
+
+      // Upload processed image to Cloudinary
+      const result = await new Promise((resolve, reject) => {
+        const uploadStream = v2.uploader.upload_stream(
+          { folder: "KAIJU/Posts/" },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        );
+
+        uploadStream.end(processedImageBuffer);
       });
-      newPost.image = resImage.secure_url;
+
+      // Add image URL to post
+      newPost.image = (result as any).secure_url;
     }
 
     await newPost.save();
     await Author.save();
+
     res.status(201).json({ message: "Post created successfully" });
   } catch (error) {
     const errorMessage =
