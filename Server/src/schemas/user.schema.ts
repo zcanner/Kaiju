@@ -35,11 +35,7 @@ const userSchema = new mongoose.Schema(
       },
     ],
     blockedUsers: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        default: [],
-      },
+      { type: mongoose.Schema.Types.ObjectId, ref: "User", default: [] },
     ],
     profileimg: {
       type: String,
@@ -53,6 +49,11 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    verified: {
+      type: Boolean,
+      default: false,
+    },
+    posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post", default: [] }],
   },
   { timestamps: true }
 );

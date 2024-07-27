@@ -2,11 +2,18 @@ import { Request, Response } from "express";
 
 import Post from "../../schemas/posts.schema.js";
 import { v2 } from "cloudinary";
+import User from "../../schemas/user.schema.js";
 
 const createPost = async (req: Request, res: Response) => {
   try {
     const data = req.body;
-    let newPost = new Post({ ...data, author: res.locals.user._id });
+    const user = res.locals.user._id;
+    let newPost = new Post({ ...data, author: user });
+
+    const Author = await user.findById(user);
+    if (!Author) return res.status(404).json({ error: "User not found" });
+
+    Author.posts.push(newPost._id);
 
     if (data.image) {
       const resImage = await v2.uploader.upload(data.image, {
@@ -16,6 +23,7 @@ const createPost = async (req: Request, res: Response) => {
     }
 
     await newPost.save();
+    await Author.save();
     res.status(201).json({ message: "Post created successfully" });
   } catch (error) {
     const errorMessage =
@@ -34,8 +42,13 @@ const removePost = async (req: Request, res: Response) => {
     if (!post || post.author?.toString() !== userID)
       throw new Error("Post not found or unauthorized");
 
-    await Post.deleteOne({ _id: post });
+    const Author = await User.findById(userID);
+    if (!Author) return res.status(404).json({ error: "User not found" });
 
+    Author.posts = Author.posts.filter((id) => id !== postID);
+
+    await Post.deleteOne({ _id: post });
+    await Author.save();
     res.status(200).json({ message: "Post removed successfully" });
   } catch (error) {
     const errorMessage =
