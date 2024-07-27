@@ -2,7 +2,7 @@ import { CiImageOn } from "react-icons/ci";
 import { useRef, useState, useEffect } from "react";
 import { IoClose } from "react-icons/io5";
 
-const CreatePost = (): JSX.Element => {
+const CreatePost = ({ user }: { user: any }): JSX.Element => {
   const [text, setText] = useState<string>("");
   const [img, setImg] = useState<string | null>(null);
 
@@ -35,23 +35,20 @@ const CreatePost = (): JSX.Element => {
     }
   }, [text]);
 
+  const firstName = user?.userDoc?.fullname.split(" ")[0];
+
   return (
     <div className="flex p-4 items-start gap-1 border border-gray-700 w-full max-w-xl ">
       <div className="avatar">
         <div className="w-10 rounded-full">
-          <img
-            src={
-              "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-            }
-            alt="Profile"
-          />
+          <img src={user?.userDoc?.profileimg} alt="Profile" />
         </div>
       </div>
       <form className="flex flex-col gap-2 w-full" onSubmit={handleSubmit}>
         <textarea
           ref={textareaRef}
           className="textarea w-full max-w-xl p-2 text-lg resize-none border-none bg-transparent focus:outline-none border-gray-800"
-          placeholder="Whats on your mind?"
+          placeholder={`What's on your mind, ${firstName}?`}
           value={text}
           role="combobox"
           aria-expanded="false"

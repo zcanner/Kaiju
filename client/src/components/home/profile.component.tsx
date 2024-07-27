@@ -3,26 +3,31 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import axios from "axios";
+
+import { RiVerifiedBadgeFill } from "react-icons/ri";
 
 const Profile = () => {
   const { username } = useParams();
 
   const { data, refetch } = useQuery({
-    queryKey: ["user", username],
+    queryKey: ["getUser"],
     queryFn: async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/user/${username}`, {
-          method: "GET",
-          credentials: "include",
-        });
-        if (!res.ok) {
-          throw new Error("An error occurred while fetching user data");
-        }
+        const res = await axios.get(
+          `http://localhost:3000/api/user/?user=${username}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        );
+        if (res.data.error) throw new Error(res.data.error);
 
-        return await res.json();
+        return res.data;
       } catch (error) {
         console.error("Error fetching user data:", error);
-        // Return null or a default object to avoid undefined
         return null;
       }
     },
@@ -32,10 +37,14 @@ const Profile = () => {
     refetch();
   }, [username, refetch]);
 
+  useEffect(() => {
+    document.title = `${data?.userDoc.username} - Kaiju`;
+  });
+
   return (
     <div className="items-start w-full max-w-xl ">
       <div className="p-2 max-h-40 items-center gap-4 ">
-        <div className="flex h-32">
+        <div className="flex h-32 gap-3">
           <div className="btn btn-sm btn-ghost btn-circle">
             <FaArrowLeft />
           </div>
@@ -43,7 +52,9 @@ const Profile = () => {
             <h1 className="text-lg font-semibold break-words">
               {data?.userDoc.username}
             </h1>
-            <p className="label-text text-opacity-70 break-words">0</p>
+            <p className="label-text text-opacity-70 break-words">
+              {data?.userDoc.posts.length} posts
+            </p>
           </div>
         </div>
       </div>
@@ -61,16 +72,17 @@ const Profile = () => {
           </div>
         </div>
         <div className="w-full">
-          <div className="flex gap-2 items-center">
-            <h1 className="text-lg font-semibold break-words">
+          <div className="content-center">
+            <h1 className="text-lg font-semibold flex items-center gap-2 break-words">
               {data?.userDoc.fullname}
+              {data?.userDoc.verified && <RiVerifiedBadgeFill />}
+              <div className="ml-auto btn btn-sm btn-ghost btn-circle">
+                <BsThreeDots />
+              </div>
             </h1>
             <h1 className="label-text-alt text-sm break-words text-opacity-70">
               @{data?.userDoc.username}
             </h1>
-            <div className="ml-auto btn btn-sm btn-ghost btn-circle">
-              <BsThreeDots />
-            </div>
           </div>
           <div className="flex gap-4">
             <a className="flex gap-2 items-center cursor-pointer break-words">
@@ -85,11 +97,11 @@ const Profile = () => {
           <div>
             <p>{data?.userDoc.bio}</p>
           </div>
-          <div className="py-2 my-2 px-1 flex gap-3 w-full">
-            <button className="btn btn-circle border-none btn-primary w-[50%]">
+          <div className="py-2 flex gap-3 w-full">
+            <button className="btn btn-md btn-circle border-none btn-primary w-[35%]">
               Follow
             </button>
-            <button className="btn btn-circle ghost bg-transparent w-[50%]">
+            <button className="btn btn-md btn-circle ghost bg-transparent w-[35%]">
               Message
             </button>
           </div>
