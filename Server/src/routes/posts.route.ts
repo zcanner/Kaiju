@@ -13,6 +13,7 @@ import {
 } from "../controllers/posts/commet.controller.js";
 
 import protectedRoute from "../middlewares/protectedRoute.middelware.js";
+import getPosts from "../controllers/posts/getPosts.js";
 const post = Router();
 // create post
 post.post("/create", protectedRoute, createPost);
@@ -28,4 +29,6 @@ post.post("/comment", protectedRoute, deleteComment);
 post.post("/remove-post", protectedRoute, removePost);
 // like-unlike post
 post.post("/toggleLike", protectedRoute, togglePostLike);
+// get posts
+post.get("/get-posts", protectedRoute, getPosts);
 export default post;
