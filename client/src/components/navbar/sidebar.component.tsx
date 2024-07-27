@@ -16,14 +16,14 @@ import { LuActivitySquare } from "react-icons/lu";
 const Navbar = () => {
   return (
     <aside
-      className="max-w-xs sticky top-0 h-svh border-r border-gray-700"
+      className="max-w-72 w-full sticky top-0 h-svh border-r border-gray-700"
       id="Sidebar"
     >
       <div className="h-svh">
         <div className="flex flex-col text-center">
           <div className="flex p-2 ">
             <a
-              className="inline-flex btn btn-ghost rounded-full text-2xl items-center"
+              className="inline-flex btn btn-ghost rounded-full font-medium text-2xl items-center"
               href=""
             >
               <div>
@@ -36,7 +36,7 @@ const Navbar = () => {
           </div>
           <div className="flex p-2 ">
             <a
-              className="inline-flex btn btn-ghost rounded-full text-2xl items-center"
+              className="inline-flex btn btn-ghost rounded-full text-2xl font-medium items-center"
               href=""
             >
               <div>
@@ -49,7 +49,7 @@ const Navbar = () => {
           </div>
           <div className="flex p-2 ">
             <a
-              className="inline-flex btn btn-ghost rounded-full text-2xl items-center"
+              className="inline-flex btn btn-ghost rounded-full text-2xl font-medium items-center"
               href=""
             >
               <div>
@@ -62,7 +62,7 @@ const Navbar = () => {
           </div>
           <div className="flex p-2 ">
             <a
-              className="inline-flex btn btn-ghost rounded-full text-2xl items-center"
+              className="inline-flex btn btn-ghost rounded-full text-2xl font-medium items-center"
               href=""
             >
               <div>
@@ -75,7 +75,7 @@ const Navbar = () => {
           </div>
           <div className="flex p-2 ">
             <a
-              className="inline-flex btn btn-ghost rounded-full text-2xl items-center"
+              className="inline-flex btn btn-ghost rounded-full text-2xl items-center font-medium"
               href=""
             >
               <div>
@@ -88,7 +88,7 @@ const Navbar = () => {
           </div>
           <div className="flex p-2 ">
             <a
-              className="inline-flex btn btn-ghost rounded-full text-2xl items-center"
+              className="inline-flex btn btn-ghost rounded-full text-2xl items-center font-medium"
               href=""
             >
               <div>
@@ -101,7 +101,7 @@ const Navbar = () => {
           </div>
           <div className="flex p-2 ">
             <a
-              className="inline-flex btn btn-ghost rounded-full text-2xl items-center"
+              className="inline-flex btn btn-ghost rounded-full text-2xl items-center font-medium"
               href=""
             >
               <div>
@@ -114,7 +114,7 @@ const Navbar = () => {
           </div>
           <div className="flex p-2 ">
             <a
-              className="inline-flex btn btn-ghost rounded-full text-2xl items-center"
+              className="inline-flex btn btn-ghost rounded-full text-2xl items-center font-medium"
               href=""
             >
               <div>
@@ -127,7 +127,7 @@ const Navbar = () => {
           </div>
           <div className="flex p-2 ">
             <a
-              className="inline-flex btn btn-ghost rounded-full text-2xl items-center"
+              className="inline-flex btn btn-ghost rounded-full text-2xl items-center font-medium"
               href=""
             >
               <div>

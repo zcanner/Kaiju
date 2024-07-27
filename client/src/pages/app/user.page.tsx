@@ -6,9 +6,7 @@ const UserPage = () => {
   return (
     <div className="w-full mx-auto">
       <div className="flex justify-center">
-        <div>
-          <Navbar />
-        </div>
+        <Navbar />
         <div className="w-full max-w-xl">
           <Profile />
           <Posts />

@@ -1,6 +1,9 @@
 import { CiImageOn } from "react-icons/ci";
 import { useRef, useState, useEffect } from "react";
 import { IoClose } from "react-icons/io5";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const CreatePost = ({ user }: { user: any }): JSX.Element => {
   const [text, setText] = useState<string>("");
@@ -9,12 +12,11 @@ const CreatePost = ({ user }: { user: any }): JSX.Element => {
   const imgRef = useRef<HTMLInputElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const isPending: boolean = false;
-  const isError: boolean = false;
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    alert("Post created successfully");
+    mutate();
   };
 
   const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -28,9 +30,38 @@ const CreatePost = ({ user }: { user: any }): JSX.Element => {
     }
   };
 
+  const { mutate, isError, isPending } = useMutation({
+    mutationKey: ["createPost"],
+    mutationFn: async () => {
+      try {
+        const res = await axios.post(
+          "http://localhost:3000/api/fun/create",
+          {
+            text,
+            img,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        );
+        if (res.data.error) throw new Error(res.data.error);
+      } catch (error) {
+        console.error("Error creating post:", error);
+        return null;
+      }
+    },
+    onSuccess: () => {
+      alert("Post created successfully");
+    },
+  });
+
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "40px";
+      textareaRef.current.style.maxHeight = "80vh";
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }, [text]);
@@ -41,7 +72,12 @@ const CreatePost = ({ user }: { user: any }): JSX.Element => {
     <div className="flex p-4 items-start gap-1 border border-gray-700 w-full max-w-xl ">
       <div className="avatar">
         <div className="w-10 rounded-full">
-          <img src={user?.userDoc?.profileimg} alt="Profile" />
+          <img
+            onClick={() => navigate(`/${user?.userDoc?.username}`)}
+            className="cursor-pointer"
+            src={user?.userDoc?.profileimg}
+            alt="Profile"
+          />
         </div>
       </div>
       <form className="flex flex-col gap-2 w-full" onSubmit={handleSubmit}>

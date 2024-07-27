@@ -1,7 +1,7 @@
 import { BsThreeDots } from "react-icons/bs";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 
@@ -44,11 +44,16 @@ const Profile = () => {
     document.title = `${data?.userDoc.username} - Kaiju`;
   });
 
+  const navigate = useNavigate();
+
   return (
     <div className="items-start w-full max-w-xl ">
       <div className="p-2 max-h-40 items-center gap-4 ">
         <div className="flex h-32 gap-3">
-          <div className="btn btn-sm btn-ghost btn-circle">
+          <div
+            onClick={() => navigate(-1)}
+            className="btn btn-sm btn-ghost btn-circle"
+          >
             <FaArrowLeft />
           </div>
           <div className="w-full sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
@@ -62,25 +67,37 @@ const Profile = () => {
         </div>
       </div>
       <div className="flex p-4 gap-4 border-b-2 border-ghostbg ">
-        <div className="avatar">
-          <div className="w-28 h-28 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-32 lg:h-32 rounded-full">
+        <div className="avatar items-center">
+          <div className="w-20 h-28 sm:size-20 md:size-24 lg:size-28 rounded-full">
             <img
-              src={
-                data?.userDoc.profileimg ||
-                "https://avatars.githubusercontent.com/u/112796674?v=4"
-              }
-              alt="Profile"
+              src={data?.userDoc.profileimg}
+              alt="pfp"
               className="w-full h-full object-cover rounded-full"
             />
           </div>
         </div>
         <div className="w-full">
-          <div className="content-center">
+          <div className="content-center items-center">
             <h1 className="text-lg font-semibold flex items-center gap-2 break-words">
               {data?.userDoc.fullname}
               {data?.userDoc.verified && <RiVerifiedBadgeFill />}
-              <div className="ml-auto btn btn-sm btn-ghost btn-circle">
-                <BsThreeDots />
+              <div className="flex w-full ml-auto max-w-52">
+                <div className="ml-auto">
+                  {user?.userDoc._id === data?.userDoc._id ? (
+                    <button className="btn text-xs btn-sm btn-circle w-24 bg-white text-black hover:bg-transparent hover:border-white hover:text-white">
+                      Edit Profile
+                    </button>
+                  ) : (
+                    <div className="gap-2 flex">
+                      <button className="btn text-xs btn-sm btn-circle w-24 border-none btn-primary">
+                        Follow
+                      </button>
+                      <div className="btn btn-sm btn-ghost btn-circle">
+                        <BsThreeDots />
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </h1>
             <h1 className="label-text-alt text-sm break-words text-opacity-70">
@@ -99,22 +116,6 @@ const Profile = () => {
           </div>
           <div>
             <p>{data?.userDoc.bio}</p>
-          </div>
-          <div className="py-2 flex gap-3 w-full">
-            {user?._id === data?.userDoc._id ? (
-              <>
-                <button className="btn btn-md btn-circle border-none btn-primary w-[35%]">
-                  Follow
-                </button>
-                <button className="btn btn-md btn-circle ghost bg-transparent w-[35%]">
-                  Message
-                </button>
-              </>
-            ) : (
-              <button className="btn btn-circle btn-md w-full bg-white text-black max-w-40 hover:bg-transparent hover:border-white hover:text-white">
-                Edit Profile
-              </button>
-            )}
           </div>
         </div>
       </div>
