@@ -8,10 +8,14 @@ const protectUserMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
+  const isQuery = Object.keys(req.query).length > 0;
   try {
-    const requestedUser = req.query.user || req.query.u;
     const token = req.cookies.token;
     if (!token) return next();
+
+    const requestedUser = isQuery
+      ? req.query.user || req.query.u
+      : (Jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload).id;
 
     const decoded = Jwt.verify(
       token,
@@ -20,9 +24,13 @@ const protectUserMiddleware = async (
 
     const requestingUserId = decoded.id;
 
-    const requestedUserDoc = await User.findOne({
-      username: requestedUser,
-    }).select("-password -email -__v -updatedAt");
+    const requestedUserDoc = isQuery
+      ? await User.findOne({
+          username: requestedUser,
+        }).select("-password -email -__v -updatedAt")
+      : await User.findById(requestedUser).select(
+          "-password -email -__v -updatedAt"
+        );
     if (!requestedUserDoc) {
       return res.status(404).json({ message: "User not found" });
     }
