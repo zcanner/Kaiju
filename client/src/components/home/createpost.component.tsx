@@ -1,7 +1,7 @@
 import { CiImageOn } from "react-icons/ci";
 import { useRef, useState, useEffect } from "react";
 import { IoClose } from "react-icons/io5";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -13,6 +13,7 @@ const CreatePost = ({ user }: { user: any }): JSX.Element => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -54,7 +55,9 @@ const CreatePost = ({ user }: { user: any }): JSX.Element => {
       }
     },
     onSuccess: () => {
-      alert("Post created successfully");
+      setText("");
+      setImg(null);
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
 

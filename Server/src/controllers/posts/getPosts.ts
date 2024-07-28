@@ -7,7 +7,7 @@ import Post from "../../schemas/posts.schema";
 // TODO - persnalize posts based on user's interests
 const getPosts = async (req: Request, res: Response) => {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find().populate("author", "-password -email -__v");
     res.status(200).json({ posts });
   } catch (error) {
     const errorMessage =

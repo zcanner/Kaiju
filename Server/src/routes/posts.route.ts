@@ -26,7 +26,7 @@ post.post("/post:postID/comment:commentID", protectedRoute, likeComment);
 // delete comment
 post.post("/comment", protectedRoute, deleteComment);
 // remove post
-post.post("/remove-post", protectedRoute, removePost);
+post.delete("/delete/:postID", protectedRoute, removePost);
 // like-unlike post
 post.post("/toggleLike", protectedRoute, togglePostLike);
 // get posts

@@ -60,7 +60,7 @@ const createPost = async (req: Request, res: Response) => {
 // remove post controller
 const removePost = async (req: Request, res: Response) => {
   try {
-    const { postID } = req.body;
+    const postID = req.params.postID;
     const userID = res.locals.user.id;
 
     const post = await Post.findOne({ _id: postID });
@@ -70,15 +70,14 @@ const removePost = async (req: Request, res: Response) => {
     const Author = await User.findById(userID);
     if (!Author) return res.status(404).json({ error: "User not found" });
 
-    Author.posts = Author.posts.filter((id) => id !== postID);
-
-    await Post.deleteOne({ _id: post });
+    Author.posts.splice(Author.posts.indexOf(post._id), 1);
+    await post.deleteOne(post._id);
     await Author.save();
     res.status(200).json({ message: "Post removed successfully" });
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Internal server error";
-    res.status(500).json({ error: errorMessage });
+    res.status(500).json({ error: errorMessage + "from delete post" });
   }
 };
 
