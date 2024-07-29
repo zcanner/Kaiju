@@ -1,4 +1,4 @@
-import Posts from "../../components/home/post.component";
+import Posts from "../../components/home/posts.component";
 import Profile from "../../components/home/profile.component";
 
 const UserPage = () => {

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import CreatePost from "../../components/home/createpost.component";
-import Posts from "../../components/home/post.component";
+import Posts from "../../components/home/posts.component";
 import { useUser } from "../../lib/hooks/getUser";
 const Home = () => {
   const { data } = useUser();
