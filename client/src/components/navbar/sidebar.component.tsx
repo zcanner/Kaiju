@@ -13,7 +13,9 @@ import { RiLogoutCircleLine } from "react-icons/ri";
 import { IoSettingsOutline, IoSettingsSharp } from "react-icons/io5";
 import { LuActivitySquare } from "react-icons/lu";
 
-const Navbar = () => {
+import { Link } from "react-router-dom";
+
+const Navbar = ({ user }: any) => {
   return (
     <aside
       className="max-w-72 w-full sticky top-0 h-svh border-r border-gray-700"
@@ -22,9 +24,9 @@ const Navbar = () => {
       <div className="h-svh">
         <div className="flex flex-col text-center">
           <div className="flex p-2 ">
-            <a
+            <Link
               className="inline-flex btn btn-ghost rounded-full font-medium text-2xl items-center"
-              href=""
+              to={"/home"}
             >
               <div>
                 <GoHome />
@@ -32,12 +34,12 @@ const Navbar = () => {
               <div>
                 <span>Home</span>
               </div>
-            </a>
+            </Link>
           </div>
           <div className="flex p-2 ">
-            <a
+            <Link
               className="inline-flex btn btn-ghost rounded-full text-2xl font-medium items-center"
-              href=""
+              to={""}
             >
               <div>
                 <MdOutlineExplore />
@@ -45,12 +47,12 @@ const Navbar = () => {
               <div>
                 <span>Explore</span>
               </div>
-            </a>
+            </Link>
           </div>
           <div className="flex p-2 ">
-            <a
+            <Link
               className="inline-flex btn btn-ghost rounded-full text-2xl font-medium items-center"
-              href=""
+              to={""}
             >
               <div>
                 <IoMdNotificationsOutline />
@@ -58,12 +60,12 @@ const Navbar = () => {
               <div>
                 <span>Notifications</span>
               </div>
-            </a>
+            </Link>
           </div>
           <div className="flex p-2 ">
-            <a
+            <Link
               className="inline-flex btn btn-ghost rounded-full text-2xl font-medium items-center"
-              href=""
+              to={""}
             >
               <div>
                 <MdOutlineEmail />
@@ -71,12 +73,12 @@ const Navbar = () => {
               <div>
                 <span>Messages</span>
               </div>
-            </a>
+            </Link>
           </div>
           <div className="flex p-2 ">
-            <a
+            <Link
               className="inline-flex btn btn-ghost rounded-full text-2xl items-center font-medium"
-              href=""
+              to={""}
             >
               <div>
                 <GiMonsterGrasp />
@@ -84,12 +86,12 @@ const Navbar = () => {
               <div>
                 <span>Slattern</span>
               </div>
-            </a>
+            </Link>
           </div>
           <div className="flex p-2 ">
-            <a
+            <Link
               className="inline-flex btn btn-ghost rounded-full text-2xl items-center font-medium"
-              href=""
+              to={""}
             >
               <div>
                 <FaRegBookmark />
@@ -97,12 +99,12 @@ const Navbar = () => {
               <div>
                 <span>Saved</span>
               </div>
-            </a>
+            </Link>
           </div>
           <div className="flex p-2 ">
-            <a
+            <Link
               className="inline-flex btn btn-ghost rounded-full text-2xl items-center font-medium"
-              href=""
+              to={`/${user?.userDoc.username}`}
             >
               <div>
                 <FaRegUser />
@@ -110,12 +112,12 @@ const Navbar = () => {
               <div>
                 <span>Profile</span>
               </div>
-            </a>
+            </Link>
           </div>
           <div className="flex p-2 ">
-            <a
+            <Link
               className="inline-flex btn btn-ghost rounded-full text-2xl items-center font-medium"
-              href=""
+              to={""}
             >
               <div>
                 <LuActivitySquare />
@@ -123,12 +125,12 @@ const Navbar = () => {
               <div>
                 <span>Your activity</span>
               </div>
-            </a>
+            </Link>
           </div>
           <div className="flex p-2 ">
-            <a
+            <Link
               className="inline-flex btn btn-ghost rounded-full text-2xl items-center font-medium"
-              href=""
+              to={""}
             >
               <div>
                 <IoSettingsOutline />
@@ -136,7 +138,7 @@ const Navbar = () => {
               <div>
                 <span>Settings</span>
               </div>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -105,8 +105,9 @@ const Posts = ({ post }: { post: any }) => {
               <div className="py-2">
                 <img
                   src={post.image}
+                  loading="lazy"
                   className="w-full rounded-xl mx-auto object-contain"
-                  alt="Selected Image"
+                  alt=""
                 />
               </div>
             )}

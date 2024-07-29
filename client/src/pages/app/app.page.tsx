@@ -23,7 +23,7 @@ const App = () => {
     <>
       <div className="w-full mx-auto">
         <div className="flex w-full justify-center">
-          <Navbar />
+          <Navbar user={data} />
           <div className="w-full max-w-xl">
             <CreatePost user={data} />
             <Posts post={post} />
