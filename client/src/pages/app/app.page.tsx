@@ -1,10 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import CreatePost from "../../components/home/createpost.component";
 import Posts from "../../components/home/post.component";
 import Navbar from "../../components/navbar/sidebar.component";
 import { useUser } from "../../lib/hooks/getUser";
-import { useEffect } from "react";
-
 const App = () => {
   const { data } = useUser();
   const { data: post } = useQuery({
@@ -22,15 +20,17 @@ const App = () => {
   });
 
   return (
-    <div className="w-full mx-auto">
-      <div className="flex w-full justify-center">
-        <Navbar />
-        <div className="w-full max-w-xl">
-          <CreatePost user={data} />
-          <Posts post={post} />
+    <>
+      <div className="w-full mx-auto">
+        <div className="flex w-full justify-center">
+          <Navbar />
+          <div className="w-full max-w-xl">
+            <CreatePost user={data} />
+            <Posts post={post} />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

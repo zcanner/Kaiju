@@ -11,9 +11,11 @@ import { BsThreeDots } from "react-icons/bs";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Posts = ({ post }: { post: any }) => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const handleClick = (postID: string) => {
     mutate(postID);
@@ -49,8 +51,13 @@ const Posts = ({ post }: { post: any }) => {
           className="flex p-4 items-start gap-2 border border-gray-700 w-full max-w-xl "
         >
           <div className="avatar top-2">
-            <div className="w-9 rounded-full">
-              <img src={post.author.profileimg} alt="Profile" />
+            <div className="w-10 rounded-full">
+              <img
+                onClick={() => navigate(`/${post.author.username}`)}
+                src={post.author.profileimg}
+                alt="Profile"
+                className="cursor-pointer"
+              />
             </div>
           </div>
           <div className="w-full px-1">
