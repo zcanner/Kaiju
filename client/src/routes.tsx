@@ -12,6 +12,7 @@ import {
 } from "./components/controller/protected.routes";
 import Home from "./pages/app/app.page";
 import App from "./app";
+import EditProfile from "./components/utils/editProfile.component";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: "home",
         element: <Home />,
+      },
+      {
+        path: "editprofile",
+        element: <EditProfile />,
       },
       {
         path: ":username",

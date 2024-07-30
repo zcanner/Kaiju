@@ -19,10 +19,10 @@ const Home = () => {
   });
 
   return (
-    <>
+    <div className="w-full max-w-xl">
       <CreatePost user={data} />
       <Posts post={post} />
-    </>
+    </div>
   );
 };
 

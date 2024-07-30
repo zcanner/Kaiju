@@ -8,9 +8,7 @@ const App = () => {
     <div className="w-full mx-auto">
       <div className="flex w-full justify-center">
         <Navbar user={data} />
-        <div className="w-full max-w-xl">
-          <Outlet />
-        </div>
+        <Outlet />
       </div>
     </div>
   );

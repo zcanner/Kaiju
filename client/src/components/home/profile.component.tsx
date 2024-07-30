@@ -34,7 +34,7 @@ const Profile = () => {
     },
   });
 
-  const { data: user } = useUser();
+  const { data: user, isLoading } = useUser();
 
   useEffect(() => {
     refetch();
@@ -45,6 +45,8 @@ const Profile = () => {
   });
 
   const navigate = useNavigate();
+
+  if (isLoading) return <h1>Loading</h1>;
 
   return (
     <div className="items-start w-full max-w-xl ">
@@ -84,7 +86,10 @@ const Profile = () => {
               <div className="flex w-full ml-auto max-w-52">
                 <div className="ml-auto">
                   {user?.userDoc._id === data?.userDoc._id ? (
-                    <button className="btn text-xs btn-sm btn-circle w-24 bg-white text-black hover:bg-transparent hover:border-white hover:text-white">
+                    <button
+                      onClick={() => navigate("/editprofile")}
+                      className="btn text-xs btn-sm btn-circle w-24 bg-white text-black hover:bg-transparent hover:border-white hover:text-white"
+                    >
                       Edit Profile
                     </button>
                   ) : (
