@@ -12,7 +12,7 @@ import {
 } from "./components/controller/protected.routes";
 import Home from "./pages/app/app.page";
 import App from "./app";
-import EditProfile from "./components/utils/editProfile.component";
+import EditProfile from "./pages/app/editProfile.component";
 
 const router = createBrowserRouter([
   {
