@@ -15,8 +15,9 @@ const updateUser = async (req: Request, res: Response) => {
     if (updatedUserData.profileimg) {
       if (user.profileimg) {
         const imageName = user.profileimg.split("/").pop()?.split(".")[0];
+        console.log(imageName, user.profileimg);
         if (imageName) {
-          await v2.uploader.destroy(imageName);
+          await v2.uploader.destroy("KAIJU/ProfileImages/" + imageName);
         }
       }
       const uploadedImage = await v2.uploader.upload(

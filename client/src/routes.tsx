@@ -10,9 +10,10 @@ import {
   ProtectedRoutes,
   Public,
 } from "./components/controller/protected.routes";
-import Home from "./pages/app/app.page";
+import Home from "./pages/app/home.page";
 import App from "./app";
 import EditProfile from "./pages/app/editProfile.component";
+import Post from "./components/home/post.component";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,15 @@ const router = createBrowserRouter([
           </Suspense>
         ),
         errorElement: <h1>404</h1>,
+      },
+      {
+        path: "post",
+        element: <Post />,
+        children: [
+          {
+            path: ":postID",
+          },
+        ],
       },
     ],
   },

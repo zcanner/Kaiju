@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import CreatePost from "../../components/home/createpost.component";
 import Posts from "../../components/home/posts.component";
-import { useUser } from "../../lib/hooks/getUser";
+import { useUser } from "../../lib/hooks/query/getUser";
 const Home = () => {
   const { data } = useUser();
+  // TODO : merge with usePost hook
   const { data: post } = useQuery({
     queryKey: ["posts"],
     queryFn: async () => {

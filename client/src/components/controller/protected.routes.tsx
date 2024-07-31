@@ -1,4 +1,4 @@
-import useAuth from "../../lib/hooks/useAuth";
+import useAuth from "../../lib/hooks/query/useAuth";
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoutes = ({

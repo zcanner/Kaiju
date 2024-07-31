@@ -9,39 +9,16 @@ import {
 } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import useDeletePost from "../../lib/hooks/mutate/useDeletePost";
 
 const Posts = ({ post }: { post: any }) => {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const handleClick = (postID: string) => {
     mutate(postID);
   };
-
-  const { mutate } = useMutation({
-    mutationKey: ["deletePost"],
-    mutationFn: async (postID: string) => {
-      try {
-        const res = await axios.delete(
-          `http://localhost:3000/api/fun/delete/${postID}`,
-          {
-            withCredentials: true,
-          }
-        );
-
-        if (res.data.error) throw new Error(res.data.error);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
-    },
-  });
-
+  const { mutate } = useDeletePost();
   const data = post?.posts;
   return (
     <>
@@ -125,7 +102,10 @@ const Posts = ({ post }: { post: any }) => {
                 </div>
                 <div>
                   <div className="flex items-center gap-1 hover:text-success label-text">
-                    <div className="btn btn-circle btn-sm btn-ghost hover:bg-success hover:bg-opacity-10  text-lg">
+                    <div
+                      onClick={() => navigate(`/post/${post._id}`)}
+                      className="btn btn-circle btn-sm btn-ghost hover:bg-success hover:bg-opacity-10  text-lg"
+                    >
                       <FaRegComment />
                     </div>
                     <span className="text-sm font-normal ">

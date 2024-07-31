@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaArrowLeft, FaPencilAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../../lib/hooks/getUser";
+import { useUser } from "../../lib/hooks/query/getUser";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

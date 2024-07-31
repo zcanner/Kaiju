@@ -1,40 +1,16 @@
 import { BsThreeDots } from "react-icons/bs";
 import { FaArrowLeft } from "react-icons/fa6";
-import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
-import axios from "axios";
 
 import { RiVerifiedBadgeFill } from "react-icons/ri";
-import { useUser } from "../../lib/hooks/getUser";
+import { useUser } from "../../lib/hooks/query/getUser";
+import useAuth from "../../lib/hooks/query/useAuth";
 
 const Profile = () => {
   const { username } = useParams();
-
-  const { data, refetch } = useQuery({
-    queryKey: ["getUser"],
-    queryFn: async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:3000/api/user/?user=${username}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-            withCredentials: true,
-          }
-        );
-        if (res.data.error) throw new Error(res.data.error);
-
-        return res.data;
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        return null;
-      }
-    },
-  });
-
-  const { data: user, isLoading } = useUser();
+  const { data, isLoading, refetch } = useUser(username!);
+  const { data: user } = useAuth();
 
   useEffect(() => {
     refetch();

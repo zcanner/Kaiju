@@ -13,7 +13,7 @@ import {
 } from "../controllers/posts/commet.controller.js";
 
 import protectedRoute from "../middlewares/protectedRoute.middelware.js";
-import getPosts from "../controllers/posts/getPosts.js";
+import { getPosts, getPost } from "../controllers/posts/getPosts.js";
 const post = Router();
 // create post
 post.post("/create", protectedRoute, createPost);
@@ -31,4 +31,6 @@ post.delete("/delete/:postID", protectedRoute, removePost);
 post.post("/toggleLike", protectedRoute, togglePostLike);
 // get posts
 post.get("/get-posts", protectedRoute, getPosts);
+// get a single post
+post.get("/get/:postID", protectedRoute, getPost);
 export default post;
