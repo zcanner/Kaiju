@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import User from "../../schemas/user.schema";
 
-const Status = async (req: Request, res: Response) => {
+const status = async (req: Request, res: Response) => {
   try {
     const token = req.cookies.token;
     if (!token) return res.json({ isAuth: false });
@@ -24,4 +24,4 @@ const Status = async (req: Request, res: Response) => {
   }
 };
 
-export default Status;
+export default status;

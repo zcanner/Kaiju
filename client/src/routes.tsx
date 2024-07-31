@@ -1,10 +1,9 @@
-import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import RootPage from "./pages/auth/root.page";
 import LoginPage from "./pages/auth/login.page";
 import SignupPage from "./pages/auth/signup.page";
 
-const UserPage = lazy(() => import("./pages/app/user.page"));
+import UserPage from "./pages/profile/user.page";
 
 import {
   ProtectedRoutes,
@@ -12,8 +11,8 @@ import {
 } from "./components/controller/protected.routes";
 import Home from "./pages/app/home.page";
 import App from "./app";
-import EditProfile from "./pages/app/editProfile.component";
-import Post from "./components/home/post.component";
+import EditProfile from "./pages/profile/editProfile.component";
+import Post from "./components/posts/post.component";
 
 const router = createBrowserRouter([
   {
@@ -57,11 +56,7 @@ const router = createBrowserRouter([
       },
       {
         path: ":username",
-        element: (
-          <Suspense fallback={<h1>Loading</h1>}>
-            <UserPage />
-          </Suspense>
-        ),
+        element: <UserPage />,
         errorElement: <h1>404</h1>,
       },
       {

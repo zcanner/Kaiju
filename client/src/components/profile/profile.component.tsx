@@ -61,7 +61,7 @@ const Profile = () => {
               {data?.userDoc.verified && <RiVerifiedBadgeFill />}
               <div className="flex w-full ml-auto max-w-52">
                 <div className="ml-auto">
-                  {user?.userDoc._id === data?.userDoc._id ? (
+                  {user?.user._id === data?.userDoc._id ? (
                     <button
                       onClick={() => navigate("/editprofile")}
                       className="btn text-xs btn-sm btn-circle w-24 bg-white text-black hover:bg-transparent hover:border-white hover:text-white"

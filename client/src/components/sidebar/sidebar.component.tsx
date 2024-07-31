@@ -15,7 +15,7 @@ import { LuActivitySquare } from "react-icons/lu";
 
 import { Link, useLocation } from "react-router-dom";
 
-const Navbar = ({ user }: any) => {
+const Sidebar = ({ user }: any) => {
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -103,4 +103,4 @@ const Navbar = ({ user }: any) => {
   );
 };
 
-export default Navbar;
+export default Sidebar;

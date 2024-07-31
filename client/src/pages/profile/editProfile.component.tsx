@@ -10,7 +10,14 @@ const EditProfile = () => {
   const { data, isLoading } = useUser();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [img, setImg] = useState<string | null>(null);
-  const [userinfo, setUserinfo] = useState({
+  interface UserInfo {
+    fullname: string;
+    username: string;
+    bio: string;
+    [key: string]: string; // Add index signature
+  }
+
+  const [userinfo, setUserinfo] = useState<UserInfo>({
     fullname: "",
     username: "",
     bio: "",
@@ -107,6 +114,12 @@ const EditProfile = () => {
     },
   });
 
+  const fields = [
+    { label: "Full Name", type: "text", name: "fullname", maxLength: 50 },
+    { label: "Username", type: "text", name: "username", maxLength: 30 },
+    { label: "Bio", type: "textarea", name: "bio", maxLength: 160, rows: 4 },
+  ];
+
   return !isLoading ? (
     <>
       <div className="flex flex-col items-start w-full max-w-xl">
@@ -163,47 +176,44 @@ const EditProfile = () => {
       </div>
       {/* side bar */}
 
-      <aside className="w-full max-w-80 md:w-72 p-4 border-l border-gray-700">
-        <div className="flex flex-col gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">Full Name</label>
-            <input
-              type="text"
-              name="fullname"
-              value={userinfo.fullname}
-              autoFocus={true}
-              spellCheck={false}
-              onChange={handleChange}
-              className="input bg-transparent input-bordered w-full"
-              maxLength={50}
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Username</label>
-            <input
-              type="text"
-              name="username"
-              value={userinfo.username}
-              onChange={handleChange}
-              spellCheck={false}
-              className="input bg-transparent input-bordered w-full"
-              maxLength={30}
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Bio</label>
-            <textarea
-              name="bio"
-              value={userinfo.bio}
-              onChange={handleChange}
-              spellCheck={false}
-              className="textarea w-full bg-transparent resize-none border border-ghostbg"
-              rows={4}
-              maxLength={160}
-            ></textarea>
-            <div className="text-right text-sm text-gray-500">
-              {userinfo.bio.length}/160
+      <aside>
+        <div className="space-y-4">
+          {fields.map((field, index) => (
+            <div key={index}>
+              <label className="block text-sm font-medium mb-1">
+                {field.label}
+              </label>
+              {field.type === "textarea" ? (
+                <>
+                  <textarea
+                    name={field.name}
+                    value={userinfo[field.name]}
+                    onChange={handleChange}
+                    spellCheck={false}
+                    className="textarea w-full bg-transparent resize-none border border-ghostbg"
+                    rows={field.rows}
+                    maxLength={field.maxLength}
+                  ></textarea>
+                  <div className="text-right text-sm text-gray-500">
+                    {userinfo[field.name].length}/{field.maxLength}
+                  </div>
+                </>
+              ) : (
+                <input
+                  type={field.type}
+                  name={field.name}
+                  value={userinfo[field.name]}
+                  autoFocus={field.name === "fullname"}
+                  spellCheck={false}
+                  onChange={handleChange}
+                  className="input bg-transparent input-bordered w-full"
+                  maxLength={field.maxLength}
+                />
+              )}
             </div>
+          ))}
+          <div className="text-right text-sm text-gray-500">
+            {userinfo.bio.length}/160
           </div>
           <button
             onClick={() => mutate()}

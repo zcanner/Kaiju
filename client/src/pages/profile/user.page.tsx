@@ -1,7 +1,5 @@
-import { lazy } from "react";
-
-const Profile = lazy(() => import("../../components/home/profile.component"));
-const Posts = lazy(() => import("../../components/home/posts.component"));
+import Profile from "../../components/profile/profile.component";
+import Posts from "../../components/posts/posts.component";
 
 const UserPage = () => {
   /*
