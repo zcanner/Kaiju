@@ -212,9 +212,6 @@ const EditProfile = () => {
               )}
             </div>
           ))}
-          <div className="text-right text-sm text-gray-500">
-            {userinfo.bio.length}/160
-          </div>
           <button
             onClick={() => mutate()}
             className="btn btn-primary w-full mt-4"
