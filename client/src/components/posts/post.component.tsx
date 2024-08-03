@@ -15,9 +15,9 @@ const Post = () => {
   if (isLoading) return <h1>Loading</h1>;
 
   return (
-    <div className="gap-2 border border-gray-700 w-full max-w-xl ">
-      <div className="p-3 items-center gap-4 ">
-        <div className="flex gap-3">
+    <div className="border border-gray-700 w-full max-w-xl ">
+      <div className="p-3 items-center ">
+        <div className="flex gap-2">
           <div
             onClick={() => navigate(-1)}
             className="btn btn-sm btn-ghost btn-circle"
@@ -25,28 +25,32 @@ const Post = () => {
             <FaArrowLeft />
           </div>
           <div className="w-full sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
-            <h1 className="text-lg font-semibold break-words">Post</h1>
+            <h1 className="text-2xl font-semibold break-words">Post</h1>
           </div>
         </div>
       </div>
-      <div className="flex p-4 items-start gap-2 ">
-        <div className="avatar top-2">
-          <div className="w-10 rounded-full">
-            <img
-              onClick={() => navigate(`/${post.author.username}`)}
-              src={post.author.profileimg}
-              alt="Profile"
-              className="cursor-pointer"
-            />
-          </div>
-        </div>
-        <div className="w-full px-1">
-          <div className="flex gap-2 items-center">
-            <div className="flex items-center gap-2">
-              <span className="font-medium">{post.author.username}</span>
-              {post.author.verified && <RiVerifiedBadgeFill />}
+      <div className="p-4">
+        <div className="w-full">
+          <div className="flex gap-2">
+            <div>
+              <div className="avatar">
+                <div className="w-12 rounded-full">
+                  <img
+                    onClick={() => navigate(`/${post.author.username}`)}
+                    src={post.author.profileimg}
+                    alt="Profile"
+                    className="cursor-pointer"
+                  />
+                </div>
+              </div>
             </div>
-            <span className="label-text">• 7h</span>
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="font-semibold">{post.author.fullname}</h3>
+                {post.author.verified && <RiVerifiedBadgeFill />}
+              </div>
+              <h3 className="label-text">@{post.author.username}</h3>
+            </div>
             <div className="dropdown dropdown-top dropdown-end ml-auto">
               <div
                 tabIndex={0}
@@ -74,22 +78,42 @@ const Post = () => {
               </ul>
             </div>
           </div>
-
-          <div id="content">
-            <p className="leading-5 pb-1 text-base">{post.content}</p>
+        </div>
+        <div>
+          <div className="p-2">
+            <p>{post.content}</p>
           </div>
-          {post.image && (
-            <div className="py-2">
+        </div>
+        <div className="max-w-xl">
+          <div>
+            {post.image && (
               <img
+                className="w-full rounded-2xl border-ghostbg border-2 p-1"
                 src={post.image}
-                loading="lazy"
-                className="w-full rounded-xl mx-auto object-contain"
-                alt=""
+                alt="image"
               />
-            </div>
-          )}
+            )}
+          </div>
+        </div>
+        <div>
+          <div className="pt-2 px-2">
+            <p className="label-text">
+              {new Date(post.createdAt).toLocaleString("en-US", {
+                hour: "numeric",
+                minute: "numeric",
+                weekday: "short",
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })}
+            </p>
+          </div>
+        </div>
+        <div className="divider px-2"></div>
+        <div className="px-2">
           <InteractionBar post={post} />
         </div>
+        <div className="divider px-2"></div>
       </div>
     </div>
   );
