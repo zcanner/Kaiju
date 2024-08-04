@@ -19,5 +19,9 @@ export const useUser = (username?: string) => {
       if (res.data.error) throw new Error(res.data.error);
       return res.data;
     },
+    throwOnError: true,
+    retry: false,
+    staleTime: 0,
+    gcTime: 0,
   });
 };

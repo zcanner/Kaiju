@@ -9,7 +9,7 @@ import useAuth from "../../lib/hooks/query/useAuth";
 
 const Profile = () => {
   const { username } = useParams();
-  const { data, isLoading, refetch } = useUser(username!);
+  const { data, isLoading, refetch, isRefetching } = useUser(username!);
   const { data: user } = useAuth();
 
   useEffect(() => {
@@ -22,7 +22,8 @@ const Profile = () => {
 
   const navigate = useNavigate();
 
-  if (isLoading) return <h1>Loading</h1>;
+  if (isLoading || isRefetching) return <h1>Loading</h1>;
+  if (!data) return <h1>Not Found</h1>;
 
   return (
     <div className="items-start w-full max-w-xl ">
