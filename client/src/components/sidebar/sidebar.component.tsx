@@ -52,7 +52,7 @@ const Sidebar = ({ user }: any) => {
       label: "Saved",
     },
     {
-      to: `/${user?.userDoc.username}`,
+      to: `/${user?.user.username}`,
       defaultIcon: FaRegUser,
       activeIcon: FaUser,
       label: "Profile",

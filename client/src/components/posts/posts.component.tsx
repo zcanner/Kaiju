@@ -37,7 +37,17 @@ const Posts = ({ post }: { post: any }) => {
                 <span className="font-medium">{post.author.username}</span>
                 {post.author.verified && <RiVerifiedBadgeFill />}
               </div>
-              <span className="label-text">• 7h</span>
+              <span className="label-text">
+                •{" "}
+                {new Date(post.createdAt).toLocaleString("en-US", {
+                  hour: "numeric",
+                  minute: "numeric",
+                  // weekday: "short",
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </span>
               <div className="dropdown dropdown-top dropdown-end ml-auto">
                 <div
                   tabIndex={0}
