@@ -17,13 +17,24 @@ const Profile = () => {
   }, [username, refetch]);
 
   useEffect(() => {
-    document.title = `${data?.userDoc.username} - Kaiju`;
+    if (data?.userDoc.username) {
+      document.title = `${data?.userDoc.username} - Kaiju`;
+    } else {
+      document.title = "Not Fond - Kaiju";
+    }
   });
 
   const navigate = useNavigate();
 
-  if (isLoading || isRefetching) return <h1>Loading</h1>;
-  if (!data) return <h1>Not Found</h1>;
+  if (isLoading || isRefetching) {
+    return (
+      <div className="w-full max-w-xl items-center h-dvh content-center">
+        <div className="flex justify-center">
+          <span className="loading loading-spinner text-primary"></span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="items-start w-full max-w-xl ">

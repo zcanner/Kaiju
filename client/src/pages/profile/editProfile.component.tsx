@@ -140,9 +140,7 @@ const EditProfile = () => {
           >
             <div className="w-20 h-28 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full relative">
               <img
-                src={
-                  img || "https://avatars.githubusercontent.com/u/112796674?v=4"
-                }
+                src={img!}
                 alt="pfp"
                 className="w-full h-full object-cover rounded-full"
               />

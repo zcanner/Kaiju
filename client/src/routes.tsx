@@ -57,7 +57,13 @@ const router = createBrowserRouter([
       {
         path: ":username",
         element: <UserPage />,
-        errorElement: <h1>404</h1>,
+        errorElement: (
+          <div className="w-full max-w-xl items-center h-dvh content-center">
+            <div className="flex justify-center">
+              <span className="text-3xl font-bold">User Not Found</span>
+            </div>
+          </div>
+        ),
       },
       {
         path: "post",
@@ -69,6 +75,22 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: "*",
+    element: (
+      <div className="w-full items-center p-10">
+        <div className="flex justify-center text-center">
+          <div>
+            <h1 className="text-3xl font-bold">Oops!</h1>
+            <p className="text-lg label-text font-medium">
+              you seem to have arrived at nowhere. <br />
+              The page you are looking for doesn't exist.
+            </p>
+          </div>
+        </div>
+      </div>
+    ),
   },
 ]);
 
