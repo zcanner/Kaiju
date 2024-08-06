@@ -3,7 +3,7 @@ import axios from "axios";
 
 const usePost = (postID: string) => {
   return useQuery({
-    queryKey: ["queryKey"],
+    queryKey: ["posts", postID],
     queryFn: async () => {
       const res = await axios.get(
         `http://localhost:3000/api/fun/get/${postID}`,

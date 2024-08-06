@@ -111,13 +111,14 @@ const togglePostLike = async (req: Request, res: Response) => {
     if (!post) return res.status(404).json({ error: "Post not found" });
 
     if (post.likes.includes(userID)) {
-      post.likes = post.likes.filter((id) => id !== userID);
+      post.likes.splice(post.likes.indexOf(userID), 1);
+      res.status(204).json({ message: "Post unliked" });
+      await post.save();
     } else {
       post.likes.push(userID);
+      res.status(201).json({ message: "Post liked" });
+      await post.save();
     }
-
-    await post.save();
-    res.status(200).json({ message: "Post liked" });
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Internal server error";

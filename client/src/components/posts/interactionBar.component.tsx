@@ -1,22 +1,75 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import { useState } from "react";
 import {
   FaRegComment,
   FaRegHeart,
   FaRegShareSquare,
   FaRegEye,
   FaRegBookmark,
+  FaHeart,
 } from "react-icons/fa";
 
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../lib/hooks/query/useAuth";
 
 const InteractionBar = ({ post }: any) => {
+  const [postID] = useState(post._id);
+  const queryClient = useQueryClient();
+  const { data: user } = useAuth();
+
+  const toggleLike = async () => {
+    try {
+      const res = await axios.post(
+        `http://localhost:3000/api/fun/toggleLike`,
+        { postID: postID },
+        {
+          withCredentials: true,
+        }
+      );
+      if (res.data.error) throw new Error(res.data.error);
+
+      if (res.status === 201) post.likes.length += 1;
+
+      if (res.status === 204) post.likes.length -= 1;
+
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const { mutate } = useMutation({
+    mutationKey: ["like", postID],
+    mutationFn: toggleLike,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const handleClick = () => {
+    console.log(postID);
+    mutate();
+  };
+
   const navigate = useNavigate();
   return (
     <div>
       <div className="flex gap-4 items-center">
         <div>
           <div className="flex items-center gap-1 hover:text-error label-text">
-            <div className="btn btn-circle btn-sm hover:bg-error hover:bg-opacity-10 btn-ghost text-lg">
-              <FaRegHeart />
+            <div
+              onClick={handleClick}
+              className="btn btn-circle btn-sm hover:bg-error hover:bg-opacity-10 btn-ghost text-lg"
+            >
+              {post.likes.includes(user?.user._id) ? (
+                <FaHeart className="fill-error" />
+              ) : (
+                <FaRegHeart />
+              )}
             </div>
             <span className="text-sm font-normal ">{post.likes.length}</span>
           </div>
