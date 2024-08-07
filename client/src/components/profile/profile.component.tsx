@@ -6,11 +6,40 @@ import { useEffect } from "react";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { useUser } from "../../lib/hooks/query/getUser";
 import useAuth from "../../lib/hooks/query/useAuth";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 
+//TODO : update only components that need to be updated & fetch only the data that is needed use chashed data for other components
 const Profile = () => {
   const { username } = useParams();
   const { data, isLoading, refetch, isRefetching } = useUser(username!);
   const { data: user } = useAuth();
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
+    mutationKey: ["follow", username],
+    mutationFn: async () => {
+      try {
+        const res = await axios.post(
+          `http://localhost:3000/api/user/updateFollowStatus?u=${username}`,
+          { me: user?.user.username },
+          {
+            withCredentials: true,
+          }
+        );
+        if (res.data.error) throw new Error(res.data.error);
+
+        return res.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   useEffect(() => {
     refetch();
@@ -82,8 +111,13 @@ const Profile = () => {
                     </button>
                   ) : (
                     <div className="gap-2 flex">
-                      <button className="btn text-xs btn-sm btn-circle w-24 border-none btn-primary">
-                        Follow
+                      <button
+                        onClick={() => mutate()}
+                        className="btn text-xs btn-sm btn-circle w-24 border-none btn-primary"
+                      >
+                        {data?.userDoc.followers.includes(user?.user._id)
+                          ? "Unfollow"
+                          : "Follow"}
                       </button>
                       <div className="btn btn-sm btn-ghost btn-circle">
                         <BsThreeDots />
