@@ -73,15 +73,15 @@ const Sidebar = ({ user }: any) => {
 
   return (
     <aside
-      className="max-w-72 w-full sticky top-0 h-svh border-r border-gray-700"
+      className="max-w-72 w-full sticky top-0 h-svh border-r border-ghostbg"
       id="Sidebar"
     >
       <div className="h-svh">
-        <div className="flex flex-col text-center">
+        <div className="flex flex-col text-center pt-10 gap-2">
           {links.map((link) => (
             <div className="flex p-2" key={link.to}>
               <Link
-                className="inline-flex btn btn-ghost rounded-full font-medium text-2xl items-center"
+                className="inline-flex btn btn-ghost rounded-full font-medium text-2xl opacity-95 items-center"
                 to={link.to}
               >
                 <div>

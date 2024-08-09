@@ -72,7 +72,7 @@ const CreatePost = ({ user }: { user: any }): JSX.Element => {
   const firstName = user?.userDoc?.fullname.split(" ")[0];
 
   return (
-    <div className="flex p-4 items-start gap-1 border border-gray-700 w-full max-w-xl ">
+    <div className="flex p-4 items-start gap-1 border-b border-ghostbg w-full max-w-xl ">
       <div className="avatar">
         <div className="w-10 rounded-full">
           <img

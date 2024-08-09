@@ -85,7 +85,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <div className="flex p-4 gap-4 border-b-2 border-ghostbg ">
+      <div className="flex p-4 gap-4 border-b border-ghostbg ">
         <div className="avatar items-center">
           <div className="w-20 h-28 sm:size-20 md:size-24 lg:size-28 rounded-full">
             <img

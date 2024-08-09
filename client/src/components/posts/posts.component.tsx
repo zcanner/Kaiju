@@ -6,7 +6,7 @@ import useDeletePost from "../../lib/hooks/mutate/useDeletePost";
 
 import InteractionBar from "./interactionBar.component";
 
-const Posts = ({ post }: { post: any }) => {
+const Posts = ({ post }: any) => {
   const navigate = useNavigate();
 
   const handleClick = (postID: string) => {
@@ -19,7 +19,7 @@ const Posts = ({ post }: { post: any }) => {
       {data?.map((post: any) => (
         <div
           key={post._id}
-          className="flex p-4 items-start gap-2 border border-gray-700 w-full max-w-xl "
+          className="flex p-4 items-start gap-2 border-b border-ghostbg w-full max-w-xl"
         >
           <div className="avatar top-2">
             <div className="w-10 rounded-full">
@@ -80,7 +80,7 @@ const Posts = ({ post }: { post: any }) => {
             </div>
 
             <div id="content">
-              <p className="leading-5 pb-1 text-base">{post.content}</p>
+              <p className="leading-normal pb-1 text-base">{post.content}</p>
             </div>
             {post.image && (
               <div className="py-2">

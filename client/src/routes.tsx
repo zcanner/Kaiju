@@ -1,18 +1,19 @@
 import { createBrowserRouter } from "react-router-dom";
+
 import RootPage from "./pages/auth/root.page";
 import LoginPage from "./pages/auth/login.page";
 import SignupPage from "./pages/auth/signup.page";
 
 import UserPage from "./pages/profile/user.page";
-
-import {
-  ProtectedRoutes,
-  Public,
-} from "./components/controller/protected.routes";
-import Home from "./pages/app/home.page";
-import App from "./app";
 import EditProfile from "./pages/profile/editProfile.component";
-import Post from "./components/posts/post.component";
+
+// prettier-ignore
+import { ProtectedRoutes, Public }from  "./components/controller/protected.routes";
+
+import Home from "./pages/app/home.page";
+import PostPage from "./pages/post/post.page";
+
+import App from "./app";
 
 const router = createBrowserRouter([
   {
@@ -67,10 +68,15 @@ const router = createBrowserRouter([
       },
       {
         path: "post",
-        element: <Post />,
+        element: <PostPage />,
         children: [
           {
-            path: ":postID",
+            path: ":username",
+            children: [
+              {
+                path: ":postID",
+              },
+            ],
           },
         ],
       },

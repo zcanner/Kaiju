@@ -174,8 +174,8 @@ const EditProfile = () => {
       </div>
       {/* side bar */}
 
-      <aside>
-        <div className="space-y-4">
+      <aside className="p-3 border-l border-ghostbg">
+        <div className="space-y-4 p-6 rounded-3xl">
           {fields.map((field, index) => (
             <div key={index}>
               <label className="block text-sm font-medium mb-1">

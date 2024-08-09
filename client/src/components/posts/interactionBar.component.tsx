@@ -57,7 +57,7 @@ const InteractionBar = ({ post }: any) => {
 
   const navigate = useNavigate();
   return (
-    <div>
+    <div className="py-3">
       <div className="flex gap-4 items-center">
         <div>
           <div className="flex items-center gap-1 hover:text-error label-text">
@@ -77,7 +77,9 @@ const InteractionBar = ({ post }: any) => {
         <div>
           <div className="flex items-center gap-1 hover:text-success label-text">
             <div
-              onClick={() => navigate(`/post/${post._id}`)}
+              onClick={() =>
+                navigate(`/post/${post.author.username}/${post._id}`)
+              }
               className="btn btn-circle btn-sm btn-ghost hover:bg-success hover:bg-opacity-10  text-lg"
             >
               <FaRegComment />
@@ -90,7 +92,7 @@ const InteractionBar = ({ post }: any) => {
             <div className="btn btn-circle btn-sm btn-ghost hover:bg-warning hover:bg-opacity-10  text-lg">
               <FaRegShareSquare />
             </div>
-            <span className="text-sm font-normal ">2K</span>
+            <span className="text-sm font-normal ">0</span>
           </div>
         </div>
         <div>
@@ -98,7 +100,7 @@ const InteractionBar = ({ post }: any) => {
             <div className="btn btn-circle btn-sm btn-ghost hover:bg-purple-500 hover:bg-opacity-10 text-lg">
               <FaRegEye />
             </div>
-            <span className="text-sm font-normal ">20M</span>
+            <span className="text-sm font-normal ">0</span>
           </div>
         </div>
         <div className="ml-auto">

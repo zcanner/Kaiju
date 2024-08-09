@@ -4,6 +4,8 @@ import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { useNavigate, useParams } from "react-router-dom";
 import usePost from "../../lib/hooks/query/usePost";
 import InteractionBar from "./interactionBar.component";
+import ReplyCoponnent from "./comment/reply.componnent";
+import { useUser } from "../../lib/hooks/query/getUser";
 
 const Post = () => {
   const navigate = useNavigate();
@@ -12,10 +14,12 @@ const Post = () => {
   const { data, isLoading } = usePost(postID!);
   const post = data?.post;
 
+  const { data: user } = useUser();
+
   if (isLoading) return <h1>Loading</h1>;
 
   return (
-    <div className="border border-gray-700 w-full max-w-xl ">
+    <div className="border-b border-ghostbg w-full max-w-xl ">
       <div className="p-3 items-center ">
         <div className="flex gap-2">
           <div
@@ -109,12 +113,11 @@ const Post = () => {
             </p>
           </div>
         </div>
-        <div className="divider px-2"></div>
-        <div className="px-2">
+        <div className="px-2 my-2 border-y border-ghostbg">
           <InteractionBar post={post} />
         </div>
-        <div className="divider px-2"></div>
       </div>
+      <ReplyCoponnent user={user} post={post} />
     </div>
   );
 };
