@@ -128,7 +128,7 @@ const ReplyCoponnent = ({ user, post }: any) => {
                 />
                 <button
                   onClick={hadnleClick}
-                  className="btn btn-primary text-center rounded-full btn-sm text-white px-4"
+                  className="btn btn-primary text-center rounded-full btn-sm"
                 >
                   {isPending ? "Replying..." : "Reply"}
                 </button>
@@ -163,7 +163,7 @@ const ReplyCoponnent = ({ user, post }: any) => {
             role="combobox"
             aria-expanded="false"
           />
-          <button className="btn btn-primary text-center rounded-full btn-sm text-white px-4">
+          <button className="btn btn-primary text-center rounded-full btn-sm">
             Reply
           </button>
         </div>

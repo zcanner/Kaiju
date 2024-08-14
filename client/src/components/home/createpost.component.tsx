@@ -120,7 +120,7 @@ const CreatePost = ({ user }: { user: any }): JSX.Element => {
             onChange={handleImgChange}
             accept="image/*"
           />
-          <button className="btn btn-primary rounded-full btn-sm text-white px-4">
+          <button className="btn btn-primary rounded-full btn-sm">
             {isPending ? "Posting..." : "Post"}
           </button>
         </div>
