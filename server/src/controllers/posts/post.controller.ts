@@ -8,12 +8,12 @@ import User from "../../schemas/user.schema.js";
 
 const createPost = async (req: Request, res: Response) => {
   try {
-    const { text, img } = req.body; // Extract content and img from req.body
+    const { data } = req.body;
     const user = res.locals.user._id;
+    const { content, image, isReply, affiliatedPost } = data;
 
-    // Create new post with correct fields
     let newPost = new Post({
-      content: text, // Set the content field
+      content: content,
       author: user,
     });
 
@@ -22,11 +22,11 @@ const createPost = async (req: Request, res: Response) => {
 
     Author.posts.push(newPost._id);
 
-    if (img) {
-      const buffer = Buffer.from(img.split(",")[1], "base64");
+    if (image) {
+      const buffer = Buffer.from(image.split(",")[1], "base64");
 
       const processedImageBuffer = await sharp(buffer)
-        .webp({ quality: 80 })
+        .jpeg({ quality: 80 })
         .toBuffer();
 
       // Upload processed image to Cloudinary
@@ -46,6 +46,15 @@ const createPost = async (req: Request, res: Response) => {
       newPost.image = (result as any).secure_url;
     }
 
+    if (isReply) {
+      const parentPost = await Post.findById(affiliatedPost);
+      if (!parentPost)
+        return res.status(404).json({ error: "Parent post not found" });
+
+      newPost.isReply = isReply;
+      newPost.affiliatedPost = affiliatedPost;
+    }
+
     await newPost.save();
     await Author.save();
 
@@ -58,6 +67,7 @@ const createPost = async (req: Request, res: Response) => {
 };
 
 // remove post controller
+// Todo : remove post from cloudinary if it has an image.
 const removePost = async (req: Request, res: Response) => {
   try {
     const postID = req.params.postID;

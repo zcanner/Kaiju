@@ -1,23 +1,27 @@
 import { CiImageOn } from "react-icons/ci";
-import { useRef, useState, useEffect } from "react";
 import { IoClose } from "react-icons/io5";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+
+import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
+
+import useCreatePost from "../../lib/hooks/mutate/useCreatePost";
+import { TPost } from "../../types/index.types";
 
 const CreatePost = ({ user }: { user: any }): JSX.Element => {
-  const [text, setText] = useState<string>("");
-  const [img, setImg] = useState<string | null>(null);
+  const [data, setData] = useState<TPost>({
+    content: "",
+    image: null,
+  });
 
   const imgRef = useRef<HTMLInputElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    mutate();
+    mutate(data);
   };
 
   const handleImgChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -25,49 +29,29 @@ const CreatePost = ({ user }: { user: any }): JSX.Element => {
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setImg(reader.result as string);
+        setData({ ...data, image: reader.result as string });
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const { mutate, isError, isPending } = useMutation({
-    mutationKey: ["createPost"],
-    mutationFn: async () => {
-      try {
-        const res = await axios.post(
-          "http://localhost:3000/api/fun/create",
-          {
-            text,
-            img,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-            withCredentials: true,
-          }
-        );
-        if (res.data.error) throw new Error(res.data.error);
-      } catch (error) {
-        console.error("Error creating post:", error);
-        return null;
-      }
-    },
+  const queryClient = useQueryClient();
+
+  const { mutate, isError, isPending } = useCreatePost({
     onSuccess: () => {
-      setText("");
-      setImg(null);
+      setData({ content: "", image: null });
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
 
   useEffect(() => {
+    console.log(data);
     if (textareaRef.current) {
       textareaRef.current.style.height = "40px";
       textareaRef.current.style.maxHeight = "80vh";
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
-  }, [text]);
+  }, [data.content]);
 
   const firstName = user?.userDoc?.fullname.split(" ")[0];
 
@@ -88,23 +72,23 @@ const CreatePost = ({ user }: { user: any }): JSX.Element => {
           ref={textareaRef}
           className="textarea w-full max-w-xl p-2 text-lg resize-none border-none bg-transparent focus:outline-none border-gray-800"
           placeholder={`What's on your mind, ${firstName}?`}
-          value={text}
+          value={data.content}
           role="combobox"
           aria-expanded="false"
           onChange={(e) => {
-            setText(e.target.value);
+            setData({ ...data, content: e.target.value });
           }}
         />
 
-        {img && (
+        {data.image && (
           <div className="relative w-full p-2 mx-auto">
-            {img && (
+            {data.image && (
               <div className="relative w-full">
                 <div className="absolute bg-gray-800 opacity-85 rounded-full top-1 right-1 flex justify-center items-center w-8 h-8 cursor-pointer hover:bg-gray-700">
                   <IoClose
                     className="text-white text-lg"
                     onClick={() => {
-                      setImg(null);
+                      setData({ ...data, image: null });
                       if (imgRef.current) {
                         imgRef.current.value = "";
                       }
@@ -113,7 +97,7 @@ const CreatePost = ({ user }: { user: any }): JSX.Element => {
                 </div>
 
                 <img
-                  src={img}
+                  src={data.image}
                   className="w-full rounded-xl mx-auto object-contain"
                   alt="Selected Image"
                 />

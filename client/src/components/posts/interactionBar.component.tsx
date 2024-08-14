@@ -71,7 +71,9 @@ const InteractionBar = ({ post }: any) => {
                 <FaRegHeart />
               )}
             </div>
-            <span className="text-sm font-normal ">{post.likes.length}</span>
+            <span className="text-sm font-normal ">
+              {post.likes?.length || 0} {/* update it later  */}
+            </span>
           </div>
         </div>
         <div>
@@ -84,7 +86,9 @@ const InteractionBar = ({ post }: any) => {
             >
               <FaRegComment />
             </div>
-            <span className="text-sm font-normal ">{post.comments.length}</span>
+            <span className="text-sm font-normal ">
+              {post.comments?.length || 0} {/* update it later  */}
+            </span>
           </div>
         </div>
         <div>

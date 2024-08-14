@@ -4,6 +4,10 @@ const postSchema = new mongoose.Schema(
   {
     content: String,
     image: String,
+    isReply: {
+      type: Boolean,
+      default: false,
+    },
     likes: [
       {
         type: mongoose.Schema.Types.ObjectId,
