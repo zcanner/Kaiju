@@ -1,17 +1,22 @@
-import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 import Post from "../../components/posts/post.component";
 import Posts from "../../components/posts/posts.component";
-import usePost from "../../lib/hooks/query/usePost";
+import { useParams } from "react-router-dom";
+import usePosts from "../../lib/hooks/query/usePosts";
 
 const PostPage = () => {
   const { postID } = useParams();
-  const { data } = usePost(postID!);
-  return (
-    <>
-      <Post />
+  const { data: posts, refetch } = usePosts("comment", postID);
 
-      <Posts post={data} />
-    </>
+  useEffect(() => {
+    refetch();
+  }, [postID]);
+
+  return (
+    <div className="border-b border-ghostbg w-full max-w-xl ">
+      <Post />
+      <Posts post={posts} />
+    </div>
   );
 };
 

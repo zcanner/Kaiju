@@ -8,8 +8,14 @@ import Post from "../../schemas/posts.schema";
 // TODO - implement filtering
 // TODO - persnalize posts based on user's interests
 const getPosts = async (req: Request, res: Response) => {
+  const { t, pID } = req.query;
+
   try {
-    const posts = await Post.find().populate("author", "-password -email -__v");
+    const posts = await Post.find(
+      t === "comment"
+        ? { isReply: true, affiliatedPost: pID }
+        : { isReply: false }
+    ).populate("author", "-password -email -__v");
     res.status(200).json({ posts });
   } catch (error) {
     const errorMessage =

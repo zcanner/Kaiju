@@ -19,7 +19,7 @@ const Post = () => {
   if (isLoading) return <h1>Loading</h1>;
 
   return (
-    <div className="border-b border-ghostbg w-full max-w-xl ">
+    <>
       <div className="p-3 items-center ">
         <div className="flex gap-2">
           <div
@@ -118,7 +118,7 @@ const Post = () => {
         </div>
       </div>
       <ReplyCoponnent user={user} post={post} />
-    </div>
+    </>
   );
 };
 
