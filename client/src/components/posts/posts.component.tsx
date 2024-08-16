@@ -6,7 +6,7 @@ import useDeletePost from "../../lib/hooks/mutate/useDeletePost";
 
 import InteractionBar from "./interactionBar.component";
 
-const Posts = ({ post }: any) => {
+const Posts = ({ post, isLoading, isRefetching }: any) => {
   const navigate = useNavigate();
 
   const handleClick = (postID: string) => {
@@ -14,6 +14,17 @@ const Posts = ({ post }: any) => {
   };
   const { mutate } = useDeletePost();
   const data = post?.posts;
+
+  if (isLoading || isRefetching) {
+    return (
+      <div className="w-full max-w-xl h-[50%] content-center items-center">
+        <div className="flex justify-center">
+          <span className="loading loading-spinner text-primary"></span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       {data?.map((post: any) => (

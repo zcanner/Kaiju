@@ -2,7 +2,10 @@ import { Router } from "express";
 
 // handlers
 import follow from "../controllers/user/follow.controller.js";
-import getUser from "../controllers/user/getUser.controller.js";
+import {
+  getUser,
+  getUserPosts,
+} from "../controllers/user/getUser.controller.js";
 import blockUser from "../controllers/user/blockUser.controller.js";
 import updateUser from "../controllers/user/updateUser.controller.js";
 
@@ -15,6 +18,8 @@ const user = Router();
 user.post("/updateFollowStatus", protectedRoute, protectUserMiddleware, follow);
 
 user.get("/", protectUserMiddleware, getUser);
+
+user.get("/posts/:author", getUserPosts);
 
 user.post("/block", protectedRoute, blockUser);
 
