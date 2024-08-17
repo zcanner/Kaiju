@@ -1,22 +1,28 @@
-import { BsThreeDots } from "react-icons/bs";
-import { FaArrowLeft } from "react-icons/fa6";
+import axios from "axios";
+
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { RiVerifiedBadgeFill } from "react-icons/ri";
+import { BsThreeDots } from "react-icons/bs";
+import { FaArrowLeft } from "react-icons/fa6";
+
 import { useUser } from "../../lib/hooks/query/getUser";
 import useAuth from "../../lib/hooks/query/useAuth";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+
 import Posts from "../posts/posts.component";
 
 //TODO : update only components that need to be updated & fetch only the data that is needed use chashed data for other components
 const Profile = () => {
   const [reply, setReply] = useState(false);
   const { username } = useParams();
+
+  const queryClient = useQueryClient();
+
   const { data, isLoading, refetch, isRefetching } = useUser(username!);
   const { data: user } = useAuth();
-  const queryClient = useQueryClient();
+
   const { mutate } = useMutation({
     mutationKey: ["follow", username],
     mutationFn: async () => {
@@ -37,6 +43,7 @@ const Profile = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user"] });
+      refetch();
     },
     onError: (error) => {
       console.log(error);
@@ -183,7 +190,6 @@ const Profile = () => {
           </div>
         </div>
         {/* post and reply */}
-        {/* // TODO add  onclick fun on both and refetch the posts*/}
         <div className="w-full max-w-xl items-center content-center border-ghostbg border-b cursor-pointer">
           <div className="flex gap-2">
             <div

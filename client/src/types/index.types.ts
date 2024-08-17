@@ -13,3 +13,19 @@ export type TPost = {
   updatedAt?: string;
   __v?: number;
 };
+
+export type TUser = {
+  _id?: string;
+  username?: string;
+  fullname?: string;
+  email?: string;
+  verified?: boolean;
+  profileimg?: string;
+  posts?: string[];
+  bio?: string[];
+  followers?: string[];
+  following?: string[];
+  createdAt?: string;
+  updatedAt?: string;
+  __v?: number;
+};

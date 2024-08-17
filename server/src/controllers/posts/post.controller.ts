@@ -80,6 +80,16 @@ const removePost = async (req: Request, res: Response) => {
     const Author = await User.findById(userID);
     if (!Author) return res.status(404).json({ error: "User not found" });
 
+    // if post has an image, remove it from cloudinary
+    if (post.image) {
+      const imageName = post.image.split("/").pop()?.split(".")[0];
+      if (imageName) {
+        await v2.uploader.destroy("KAIJU/Posts/" + imageName);
+      }
+    }
+
+    // delete comments of the post if it has any (affiliatedPost)
+
     Author.posts.splice(Author.posts.indexOf(post._id), 1);
     await post.deleteOne(post._id);
     await Author.save();

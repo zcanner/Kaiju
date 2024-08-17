@@ -48,7 +48,7 @@ const ReplyCoponnent = ({ user, post }: any) => {
 
   const { mutate, isError, isPending } = useCreatePost({
     onSuccess: () => {
-      setData({ content: "", image: null });
+      setData({ ...data, content: "", image: null });
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
