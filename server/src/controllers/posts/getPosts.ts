@@ -9,13 +9,30 @@ import Post from "../../schemas/posts.schema";
 // TODO - persnalize posts based on user's interests
 const getPosts = async (req: Request, res: Response) => {
   const { t, pID } = req.query;
+  const user = res.locals.user;
+
+  let query = {};
+
+  switch (t) {
+    case "For You":
+      query = { isReply: false };
+      break;
+    case "following":
+      query = { author: { $in: user.following }, isReply: false };
+      break;
+    case "comment":
+      query = { isReply: true, affiliatedPost: pID };
+      break;
+    default:
+      query = { isReply: false };
+      break;
+  }
 
   try {
-    const posts = await Post.find(
-      t === "comment"
-        ? { isReply: true, affiliatedPost: pID }
-        : { isReply: false }
-    ).populate("author", "-password -email -__v");
+    const posts = await Post.find(query).populate(
+      "author",
+      "-password -email -__v"
+    );
     res.status(200).json({ posts });
   } catch (error) {
     const errorMessage =

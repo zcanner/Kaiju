@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
+// TODO : use this to fetch user posts on user profile page.
 const usePosts = (query?: string, pID?: string) => {
   return useQuery({
     queryKey: ["posts"],

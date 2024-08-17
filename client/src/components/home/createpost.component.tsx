@@ -75,6 +75,7 @@ const CreatePost = ({ user }: { user: any }): JSX.Element => {
           value={data.content}
           role="combobox"
           aria-expanded="false"
+          maxLength={1000}
           onChange={(e) => {
             setData({ ...data, content: e.target.value });
           }}
