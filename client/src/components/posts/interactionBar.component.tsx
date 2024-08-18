@@ -12,8 +12,9 @@ import {
 
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../lib/hooks/query/useAuth";
+import { TPost } from "../../types/index.types";
 
-const InteractionBar = ({ post }: any) => {
+const InteractionBar = ({ post }: { post: TPost }) => {
   const [postID] = useState(post._id);
   const queryClient = useQueryClient();
   const { data: user } = useAuth();
@@ -28,6 +29,8 @@ const InteractionBar = ({ post }: any) => {
         }
       );
       if (res.data.error) throw new Error(res.data.error);
+
+      post.likes = post.likes ?? [];
 
       if (res.status === 201) post.likes.length += 1;
 
@@ -65,7 +68,7 @@ const InteractionBar = ({ post }: any) => {
               onClick={handleClick}
               className="btn btn-circle btn-sm hover:bg-error hover:bg-opacity-10 btn-ghost text-lg"
             >
-              {post.likes.includes(user?.user._id) ? (
+              {post.likes?.includes(user?.user._id) ? (
                 <FaHeart className="fill-error" />
               ) : (
                 <FaRegHeart />
@@ -80,15 +83,13 @@ const InteractionBar = ({ post }: any) => {
           <div className="flex items-center gap-1 hover:text-success label-text">
             <div
               onClick={() =>
-                navigate(`/post/${post.author.username}/${post._id}`)
+                navigate(`/post/${post.author?.username}/${post._id}`)
               }
               className="btn btn-circle btn-sm btn-ghost hover:bg-success hover:bg-opacity-10  text-lg"
             >
               <FaRegComment />
             </div>
-            <span className="text-sm font-normal ">
-              {post.comments?.length || 0} {/* update it later  */}
-            </span>
+            <span className="text-sm font-normal ">{post.comments}</span>
           </div>
         </div>
         <div>
@@ -104,7 +105,7 @@ const InteractionBar = ({ post }: any) => {
             <div className="btn btn-circle btn-sm btn-ghost hover:bg-purple-500 hover:bg-opacity-10 text-lg">
               <FaRegEye />
             </div>
-            <span className="text-sm font-normal ">0</span>
+            <span className="text-sm font-normal ">{post.views}</span>
           </div>
         </div>
         <div className="ml-auto">

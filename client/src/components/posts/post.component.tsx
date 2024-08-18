@@ -6,6 +6,8 @@ import usePost from "../../lib/hooks/query/usePost";
 import InteractionBar from "./interactionBar.component";
 import ReplyCoponnent from "./comment/reply.componnent";
 import { useUser } from "../../lib/hooks/query/getUser";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 
 const Post = () => {
   const navigate = useNavigate();
@@ -15,6 +17,29 @@ const Post = () => {
   const post = data?.post;
 
   const { data: user } = useUser();
+
+  const { mutate } = useMutation({
+    mutationFn: async () => {
+      try {
+        const res = await axios.post(
+          `http://localhost:3000/api/user/block?u=${post.author.username}`,
+          null,
+          {
+            withCredentials: true,
+          }
+        );
+
+        if (res.status !== 200) throw new Error("Failed to block user");
+
+        if (res.status === 200) {
+          navigate(-1);
+        }
+        return res.data;
+      } catch (error) {
+        console.error("Error in blockUser:", error);
+      }
+    },
+  });
 
   if (isLoading) return <h1>Loading</h1>;
 
@@ -77,6 +102,14 @@ const Post = () => {
                   <a>
                     <FaPencilAlt />
                     Edit
+                  </a>
+                </li>
+                <li>
+                  <a onClick={() => mutate()} className="text-error">
+                    {user?.userDoc?.blockedUsers?.includes(post?.author._id)
+                      ? "unblock"
+                      : "block"}{" "}
+                    {post.author.username}
                   </a>
                 </li>
               </ul>

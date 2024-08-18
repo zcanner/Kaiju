@@ -33,6 +33,7 @@ const getPosts = async (req: Request, res: Response) => {
       "author",
       "-password -email -__v"
     );
+
     res.status(200).json({ posts });
   } catch (error) {
     const errorMessage =
@@ -51,7 +52,10 @@ const getPost = async (req: Request, res: Response) => {
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
     }
+    // increment the views count when the post is viewed
+    post.views++; // increment the views count
     res.status(200).json({ post });
+    post.save();
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Internal server error";

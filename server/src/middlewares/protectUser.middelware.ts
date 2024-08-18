@@ -3,6 +3,11 @@ import Jwt, { JwtPayload } from "jsonwebtoken";
 
 import User from "../schemas/user.schema.js";
 
+/**
+ * This middleware is used to protect user's data from unauthorized access
+ * like private account, blocked users etc.
+ * @returns {void}
+ */
 const protectUserMiddleware = async (
   req: Request,
   res: Response,

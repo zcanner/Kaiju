@@ -1,9 +1,18 @@
+import { number } from "joi";
 import mongoose from "mongoose";
 
 const postSchema = new mongoose.Schema(
   {
     content: String,
     image: String,
+    views: {
+      type: Number,
+      default: 0,
+    },
+    comments: {
+      type: Number,
+      default: 0,
+    },
     isReply: {
       type: Boolean,
       default: false,

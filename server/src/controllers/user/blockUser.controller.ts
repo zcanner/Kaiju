@@ -9,12 +9,15 @@ const blockeUser = async (req: Request, res: Response) => {
     const u = req.query.u;
     if (u === user.username) throw new Error("You cannot block yourself");
 
-    // self explanatory
     const userToBlock = await User.findOne({ username: u });
     if (!userToBlock) throw new Error("User not found");
 
-    if (user.blockedUsers.includes(userToBlock._id))
-      throw new Error("You are already blocked this user");
+    // check if user is already blocked, if yes then unblock
+    if (user.blockedUsers.includes(userToBlock._id)) {
+      user.blockedUsers.pull(userToBlock._id);
+      res.status(200).send("User unblocked successfully");
+      return await user.save();
+    }
 
     /* before pushing the user into blockedUseers arr
        lets check if he follows the user to block. */
@@ -59,7 +62,6 @@ const blockeUser = async (req: Request, res: Response) => {
     user.blockedUsers.push(userToBlock._id);
     await user.save();
 
-    console.log(u, user.username);
     res.status(200).send("User blocked successfully");
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : null;

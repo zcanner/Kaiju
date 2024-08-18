@@ -53,6 +53,8 @@ const createPost = async (req: Request, res: Response) => {
 
       newPost.isReply = isReply;
       newPost.affiliatedPost = affiliatedPost;
+      parentPost.comments++;
+      await parentPost.save();
     }
 
     await newPost.save();
