@@ -9,6 +9,8 @@ import {
 
 import protectedRoute from "../middlewares/protectedRoute.middelware.js";
 import { getPosts, getPost } from "../controllers/posts/getPosts.js";
+import save from "../controllers/posts/save.controller.js";
+
 const post = Router();
 // create post
 post.post("/create", protectedRoute, createPost);
@@ -22,4 +24,6 @@ post.post("/toggleLike", protectedRoute, togglePostLike);
 post.get("/get-posts", protectedRoute, getPosts);
 // get a single post
 post.get("/get/:postID", protectedRoute, getPost);
+// save post
+post.post("/save", protectedRoute, save);
 export default post;
