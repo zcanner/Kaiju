@@ -59,6 +59,8 @@ const blockeUser = async (req: Request, res: Response) => {
       await userToBlock.save();
     }
 
+    // TODO : check if user to block of blocked user ever liked or commented on each others posts.
+
     user.blockedUsers.push(userToBlock._id);
     await user.save();
 

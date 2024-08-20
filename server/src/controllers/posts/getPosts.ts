@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Post from "../../schemas/posts.schema";
+import post from "../../routes/posts.route";
 
 // TODO : merge getPosts and getPost into one controller that can handle both requests
 
@@ -29,12 +30,25 @@ const getPosts = async (req: Request, res: Response) => {
   }
 
   try {
-    const posts = await Post.find(query).populate(
-      "author",
-      "-password -email -__v"
-    );
+    // Fetch all posts from the database and populate the author field with the user's details
+    // Exclude posts where the author is in the user's blocked list or the user is in the author's blocked list
+    const posts = await Post.find(query)
+      .populate({
+        path: "author",
+        select: "-password -email -followers -following -bio -__v",
+        match: {
+          $and: [
+            { _id: { $nin: user.blockedUsers } },
+            { blockedUsers: { $ne: user._id } },
+          ],
+        },
+      })
+      .sort({ createdAt: -1 });
 
-    res.status(200).json({ posts });
+    // Filter out posts where the author is null (due to the populate match condition)
+    const filteredPosts = posts.filter((post) => post.author !== null);
+
+    res.status(200).json({ posts: filteredPosts });
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "Internal server error";
