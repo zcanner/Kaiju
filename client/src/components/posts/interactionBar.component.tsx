@@ -53,6 +53,18 @@ const InteractionBar = ({ post }: { post: TPost }) => {
     },
   });
 
+  const { mutate: save } = useMutation({
+    mutationFn: async () => {
+      const res = await axios.post(
+        `http://localhost:3000/api/fun/save`,
+        { postID },
+        { withCredentials: true }
+      );
+      if (res.data.error) throw new Error(res.data.error);
+      return res.data;
+    },
+  });
+
   const handleClick = () => {
     console.log(postID);
     mutate();
@@ -110,7 +122,10 @@ const InteractionBar = ({ post }: { post: TPost }) => {
         </div>
         <div className="ml-auto">
           <div className="hover:text-blue-500 label-text">
-            <div className="btn btn-circle btn-xs btn-ghost hover:bg-blue-500 hover:bg-opacity-10 text-lg">
+            <div
+              onClick={() => save()}
+              className="btn btn-circle btn-xs btn-ghost hover:bg-blue-500 hover:bg-opacity-10 text-lg"
+            >
               <FaRegBookmark />
             </div>
           </div>

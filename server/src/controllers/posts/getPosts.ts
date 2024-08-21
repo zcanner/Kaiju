@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import Post from "../../schemas/posts.schema";
-import post from "../../routes/posts.route";
 
 // TODO : merge getPosts and getPost into one controller that can handle both requests
 

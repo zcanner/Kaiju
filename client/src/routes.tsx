@@ -12,6 +12,7 @@ import { ProtectedRoutes, Public }from  "./components/controller/protected.route
 
 import Home from "./pages/app/home.page";
 import PostPage from "./pages/post/post.page";
+import Saved from "./pages/app/saved.page";
 
 import App from "./app";
 
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
       {
         path: "editprofile",
         element: <EditProfile />,
+      },
+      {
+        path: "saved",
+        element: <Saved />,
       },
       {
         path: ":username",

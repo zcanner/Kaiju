@@ -10,7 +10,16 @@ const save = async (req: Request, res: Response) => {
 
     // Check if the post is already saved
     const post = await Saved.findOne({ user, post: postID });
-    if (post) return res.status(400).json({ error: "Post already saved" });
+    if (post) {
+      // If saved, remove the post from the saved array
+      await Saved.findOneAndUpdate(
+        { user },
+        { $pull: { post: postID } },
+        { new: true }
+      );
+      await post.save();
+      return res.status(200).json({ message: "Post unsaved" });
+    }
 
     // Check if the post exists
     const postExists = await Post.findById(postID);
