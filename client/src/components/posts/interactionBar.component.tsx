@@ -63,6 +63,9 @@ const InteractionBar = ({ post }: { post: TPost }) => {
       if (res.data.error) throw new Error(res.data.error);
       return res.data;
     },
+    onSuccess() {
+      queryClient.invalidateQueries({ queryKey: ["saved"] });
+    },
   });
 
   const handleClick = () => {
