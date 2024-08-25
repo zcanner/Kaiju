@@ -1,12 +1,12 @@
-import { CiImageOn } from "react-icons/ci";
-import { IoClose } from "react-icons/io5";
-
-import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRef, useState, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
 import useCreatePost from "../../lib/hooks/mutate/useCreatePost";
 import { TPost } from "../../types/index.types";
+
+import { CiImageOn } from "react-icons/ci";
+import { IoClose } from "react-icons/io5";
 
 const CreatePost = ({ user }: { user: any }): JSX.Element => {
   const [data, setData] = useState<TPost>({

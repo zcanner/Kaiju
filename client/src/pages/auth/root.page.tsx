@@ -1,6 +1,7 @@
-import { FaDiscord, FaGoogle } from "react-icons/fa6";
 import logo from "/Logo_white_trans.svg";
 import { useNavigate } from "react-router-dom";
+
+import { FaDiscord, FaGoogle } from "react-icons/fa6";
 
 const RootPage = () => {
   const navigate = useNavigate();

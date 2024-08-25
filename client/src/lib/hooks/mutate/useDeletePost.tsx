@@ -1,5 +1,5 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const useDeletePost = () => {
   const queryClient = useQueryClient();

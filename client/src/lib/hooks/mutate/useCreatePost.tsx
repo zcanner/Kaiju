@@ -1,5 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
 import { TPost } from "../../../types/index.types";
 
 type UseCreatePostOptions = {

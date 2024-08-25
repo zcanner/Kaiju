@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-export const useUser = (username?: string) => {
+const useUser = (username?: string) => {
   return useQuery({
     queryKey: ["user"],
     queryFn: async () => {
@@ -19,9 +19,7 @@ export const useUser = (username?: string) => {
       if (res.data.error) throw new Error(res.data.error);
       return res.data;
     },
-    throwOnError: true,
-    retry: false,
-    staleTime: 0,
-    gcTime: 0,
   });
 };
+
+export default useUser;

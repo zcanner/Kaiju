@@ -1,10 +1,11 @@
-import { FaRegTrashAlt, FaPencilAlt } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
-import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
-import useDeletePost from "../../lib/hooks/mutate/useDeletePost";
+
+import { FaRegTrashAlt, FaPencilAlt } from "react-icons/fa";
+import { RiVerifiedBadgeFill } from "react-icons/ri";
 
 import InteractionBar from "./interactionBar.component";
+import useDeletePost from "../../lib/hooks/mutate/useDeletePost";
 
 const Posts = ({ post, isLoading, isRefetching }: any) => {
   const navigate = useNavigate();

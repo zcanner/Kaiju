@@ -1,14 +1,13 @@
 import axios from "axios";
-
-import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { BsThreeDots } from "react-icons/bs";
 import { FaArrowLeft } from "react-icons/fa6";
 
-import { useUser } from "../../lib/hooks/query/getUser";
+import useUser from "../../lib/hooks/query/getUser";
 import useAuth from "../../lib/hooks/query/useAuth";
 
 import Posts from "../posts/posts.component";

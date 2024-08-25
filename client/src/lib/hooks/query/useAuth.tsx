@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 const fetchAuthStatus = async () => {
   const res = await axios.get("http://localhost:3000/api/auth/status", {

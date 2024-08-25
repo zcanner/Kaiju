@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
 import Joi from "joi";
+import { Request, Response } from "express";
 
 import User from "../../schemas/user.schema.js";
 import generateToken from "../../lib/utils/jsonwebtoken.js";

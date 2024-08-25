@@ -1,9 +1,9 @@
+import { useState } from "react";
+import axios, { isAxiosError } from "axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import { FaDiscord, FaGoogle } from "react-icons/fa6";
 import logo from "/Logo_white_trans.svg";
-
-import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios, { isAxiosError } from "axios";
 
 interface FormData {
   identity: string;

@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+
 import CreatePost from "../../components/home/createpost.component";
 import Posts from "../../components/posts/posts.component";
-import { useUser } from "../../lib/hooks/query/getUser";
+
+import useUser from "../../lib/hooks/query/getUser";
 import usePosts from "../../lib/hooks/query/usePosts";
+
 const Home = () => {
   const { data } = useUser();
   // TODO : merge with usePost hook

@@ -1,10 +1,11 @@
-import { FaArrowLeft } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 import Posts from "../../components/posts/posts.component";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import useAuth from "../../lib/hooks/query/useAuth";
+
+import { FaArrowLeft } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Saved = () => {
   const navigate = useNavigate();

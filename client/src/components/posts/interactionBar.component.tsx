@@ -1,6 +1,11 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import useAuth from "../../lib/hooks/query/useAuth";
+import { TPost } from "../../types/index.types";
+
 import {
   FaRegComment,
   FaRegHeart,
@@ -9,10 +14,6 @@ import {
   FaRegBookmark,
   FaHeart,
 } from "react-icons/fa";
-
-import { useNavigate } from "react-router-dom";
-import useAuth from "../../lib/hooks/query/useAuth";
-import { TPost } from "../../types/index.types";
 
 const InteractionBar = ({ post }: { post: TPost }) => {
   const [postID] = useState(post._id);

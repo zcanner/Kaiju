@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
-import User from "../../schemas/user.schema.js";
 import mongoose from "mongoose";
+import User from "../../schemas/user.schema.js";
 
 const blockeUser = async (req: Request, res: Response) => {
   try {

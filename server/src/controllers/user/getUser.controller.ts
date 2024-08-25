@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import User from "../../schemas/user.schema.js";
 import jwt, { JwtPayload } from "jsonwebtoken";
+
 import mongoose from "mongoose";
+import User from "../../schemas/user.schema.js";
 import Post from "../../schemas/posts.schema.js";
 
 const getUser = async (req: Request, res: Response) => {

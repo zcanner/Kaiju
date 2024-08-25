@@ -1,12 +1,15 @@
 import { BsThreeDots } from "react-icons/bs";
-import { FaArrowLeft, FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
+import { useMutation } from "@tanstack/react-query";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { useNavigate, useParams } from "react-router-dom";
+import { FaArrowLeft, FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
+
 import usePost from "../../lib/hooks/query/usePost";
+import useUser from "../../lib/hooks/query/getUser";
+
 import InteractionBar from "./interactionBar.component";
 import ReplyCoponnent from "./comment/reply.componnent";
-import { useUser } from "../../lib/hooks/query/getUser";
-import { useMutation } from "@tanstack/react-query";
+
 import axios from "axios";
 
 const Post = () => {

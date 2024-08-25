@@ -1,8 +1,10 @@
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+
+import usePosts from "../../lib/hooks/query/usePosts";
+
 import Post from "../../components/posts/post.component";
 import Posts from "../../components/posts/posts.component";
-import { useParams } from "react-router-dom";
-import usePosts from "../../lib/hooks/query/usePosts";
 
 const PostPage = () => {
   const { postID } = useParams();
