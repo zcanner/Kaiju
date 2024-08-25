@@ -1,16 +1,23 @@
 import { Request, Response } from "express";
 
-import { v2 } from "cloudinary";
+import Joi from "joi";
 import sharp from "sharp";
+import { v2 } from "cloudinary";
 
 import Post from "../../schemas/posts.schema.js";
 import User from "../../schemas/user.schema.js";
+
+const foo = Joi.object({
+  content: Joi.string().required(),
+});
 
 const createPost = async (req: Request, res: Response) => {
   try {
     const { data } = req.body;
     const user = res.locals.user._id;
     const { content, image, isReply, affiliatedPost } = data;
+    const { error } = foo.validate({ content });
+    if (error) throw new Error(`error validating ${error.message}`);
 
     let newPost = new Post({
       content: content,

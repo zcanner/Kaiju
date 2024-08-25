@@ -9,9 +9,10 @@ import { CiImageOn } from "react-icons/ci";
 import { IoClose } from "react-icons/io5";
 
 const CreatePost = ({ user }: { user: any }): JSX.Element => {
+  const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [data, setData] = useState<TPost>({
     content: "",
-    image: null,
+    image: "",
   });
 
   const imgRef = useRef<HTMLInputElement | null>(null);
@@ -45,7 +46,12 @@ const CreatePost = ({ user }: { user: any }): JSX.Element => {
   });
 
   useEffect(() => {
-    console.log(data);
+    if (data.content.length > 0) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+
     if (textareaRef.current) {
       textareaRef.current.style.height = "40px";
       textareaRef.current.style.maxHeight = "80vh";
@@ -121,7 +127,7 @@ const CreatePost = ({ user }: { user: any }): JSX.Element => {
             onChange={handleImgChange}
             accept="image/*"
           />
-          <button className="pButton">
+          <button disabled={isDisabled} className="pButton">
             {isPending ? "Posting..." : "Post"}
           </button>
         </div>

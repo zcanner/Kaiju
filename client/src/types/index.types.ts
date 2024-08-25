@@ -3,7 +3,7 @@
  */
 export type TPost = {
   _id?: string;
-  content?: string;
+  content: string;
   isReply?: boolean;
   comments?: number;
   views?: number;

@@ -9,6 +9,7 @@ import { TPost } from "../../../types/index.types";
 import useCreatePost from "../../../lib/hooks/mutate/useCreatePost";
 
 const ReplyCoponnent = ({ user, post }: any) => {
+  const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [data, setData] = useState<TPost>({
     content: "",
     image: null,
@@ -28,6 +29,11 @@ const ReplyCoponnent = ({ user, post }: any) => {
   };
 
   useEffect(() => {
+    if (data.content.length > 0) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
     if (textareaRef.current) {
       textareaRef.current.style.height = "40px";
       textareaRef.current.style.maxHeight = "60vh";
@@ -126,7 +132,11 @@ const ReplyCoponnent = ({ user, post }: any) => {
                   hidden
                   accept="image/*"
                 />
-                <button onClick={hadnleClick} className="pButton">
+                <button
+                  disabled={isDisabled}
+                  onClick={hadnleClick}
+                  className="pButton"
+                >
                   {isPending ? "Replying..." : "Reply"}
                 </button>
               </div>
@@ -160,7 +170,9 @@ const ReplyCoponnent = ({ user, post }: any) => {
             role="combobox"
             aria-expanded="false"
           />
-          <button className="pButton">Reply</button>
+          <button disabled={isDisabled} className="pButton">
+            Reply
+          </button>
         </div>
       )}
     </div>

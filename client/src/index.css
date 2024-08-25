@@ -33,3 +33,7 @@
 .pButton {
   @apply btn btn-primary bg-opacity-20 text-primary hover:bg-opacity-45 border-none text-opacity-80 rounded-full btn-sm font-semibold;
 }
+
+.pButton:disabled {
+  @apply text-primary border-none text-opacity-80 rounded-full btn-sm font-semibold;
+}
