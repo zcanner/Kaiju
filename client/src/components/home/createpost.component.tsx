@@ -121,7 +121,7 @@ const CreatePost = ({ user }: { user: any }): JSX.Element => {
             onChange={handleImgChange}
             accept="image/*"
           />
-          <button className="btn btn-primary rounded-full btn-sm">
+          <button className="pButton">
             {isPending ? "Posting..." : "Post"}
           </button>
         </div>

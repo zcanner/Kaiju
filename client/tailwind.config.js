@@ -8,7 +8,7 @@ export default {
       {
         dark: {
           ...require("daisyui/src/theming/themes")["dark"],
-          primary: "#16a34a",
+          primary: "#e8570c",
         },
       },
     ],

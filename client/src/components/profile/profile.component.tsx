@@ -144,7 +144,7 @@ const Profile = () => {
                     {user?.user._id === data?.userDoc._id ? (
                       <button
                         onClick={() => navigate("/editprofile")}
-                        className="btn text-xs btn-sm btn-circle w-24 bg-white text-black hover:bg-transparent hover:border-white hover:text-white"
+                        className="btn text-xs btn-sm btn-circle w-24 ghost text-white"
                       >
                         Edit Profile
                       </button>
@@ -152,7 +152,7 @@ const Profile = () => {
                       <div className="gap-2 flex">
                         <button
                           onClick={() => mutate()}
-                          className="btn text-xs btn-sm btn-circle w-24 border-none btn-primary"
+                          className="min-w-24 pButton"
                         >
                           {data?.userDoc.followers.includes(user?.user._id)
                             ? "Unfollow"

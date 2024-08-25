@@ -126,10 +126,7 @@ const ReplyCoponnent = ({ user, post }: any) => {
                   hidden
                   accept="image/*"
                 />
-                <button
-                  onClick={hadnleClick}
-                  className="btn btn-primary text-center rounded-full btn-sm"
-                >
+                <button onClick={hadnleClick} className="pButton">
                   {isPending ? "Replying..." : "Reply"}
                 </button>
               </div>
@@ -163,9 +160,7 @@ const ReplyCoponnent = ({ user, post }: any) => {
             role="combobox"
             aria-expanded="false"
           />
-          <button className="btn btn-primary text-center rounded-full btn-sm">
-            Reply
-          </button>
+          <button className="pButton">Reply</button>
         </div>
       )}
     </div>
