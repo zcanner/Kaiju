@@ -3,7 +3,7 @@ import axios from "axios";
 
 const useUser = (username?: string) => {
   return useQuery({
-    queryKey: ["user"],
+    queryKey: ["user", username],
     queryFn: async () => {
       const res = await axios.get(
         username
@@ -19,6 +19,8 @@ const useUser = (username?: string) => {
       if (res.data.error) throw new Error(res.data.error);
       return res.data;
     },
+    retry: false,
+    throwOnError: true,
   });
 };
 
