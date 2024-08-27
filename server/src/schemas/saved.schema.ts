@@ -7,7 +7,6 @@ const savedSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: "Post",
         default: [],
-        unique: true,
       },
     ],
     user: {

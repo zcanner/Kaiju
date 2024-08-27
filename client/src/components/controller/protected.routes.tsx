@@ -10,8 +10,6 @@ const ProtectedRoutes = ({
 }) => {
   const { data, isError, isLoading } = useAuth();
 
-  console.log("form protected route controller ", data);
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -31,8 +29,6 @@ const Public = ({
   to: string;
 }) => {
   const { data, isError, isLoading } = useAuth();
-
-  console.log("form public route controller ", data);
 
   if (isLoading) {
     return <div>Loading...</div>;
