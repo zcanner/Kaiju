@@ -1,9 +1,9 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import useAuth from "../../lib/hooks/query/useAuth";
+import { AuthContext } from "../../app";
 import { TPost } from "../../types/index.types";
 
 import {
@@ -18,7 +18,7 @@ import {
 const InteractionBar = ({ post }: { post: TPost }) => {
   const [postID] = useState(post._id);
   const queryClient = useQueryClient();
-  const { data: user } = useAuth();
+  const { data: user } = useContext(AuthContext);
 
   const toggleLike = async () => {
     try {

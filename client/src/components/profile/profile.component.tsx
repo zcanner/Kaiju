@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 // prettier-ignore
 import { useQueryClient, RefetchOptions, QueryObserverResult } from "@tanstack/react-query";
@@ -6,7 +6,7 @@ import { useQueryClient, RefetchOptions, QueryObserverResult } from "@tanstack/r
 import { FaArrowLeft } from "react-icons/fa6";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 
-import useAuth from "../../lib/hooks/query/useAuth";
+import { AuthContext } from "../../app";
 import FollowUnfollowButton from "./followUnfollowButton.component";
 
 type ProfileProps = {
@@ -31,7 +31,7 @@ const Profile: React.FC<ProfileProps> = ({
   const { username } = useParams();
   const queryClient = useQueryClient();
 
-  const { data: user } = useAuth();
+  const { data: user } = useContext(AuthContext);
 
   useEffect(() => {
     refetch();

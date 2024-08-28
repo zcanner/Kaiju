@@ -58,7 +58,7 @@ const UserPage = () => {
         refetch={refetch}
         data={data}
       />
-      <Posts isLoading={loading} isRefetching={refetching} post={post} />;
+      <Posts isLoading={loading} isRefetching={refetching} post={post} />
     </div>
   );
 };
