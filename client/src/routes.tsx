@@ -4,6 +4,12 @@ import RootPage from "./pages/auth/root.page";
 import LoginPage from "./pages/auth/login.page";
 import SignupPage from "./pages/auth/signup.page";
 
+import Option from "./pages/setting/option.page";
+import Settings from "./pages/setting/settings.page";
+import AccountInfo from "./pages/setting/accountInfo.page";
+import BlockedUsers from "./pages/setting/blockedUser.page";
+import ChangePassword from "./pages/setting/changePassword.page";
+
 import UserPage from "./pages/profile/user.page";
 import EditProfile from "./pages/profile/editProfile.component";
 
@@ -70,6 +76,36 @@ const router = createBrowserRouter([
             </div>
           </div>
         ),
+      },
+      {
+        path: "settings",
+        element: <Settings />,
+        children: [
+          {
+            index: true,
+            element: <Option />,
+          },
+          {
+            path: "account",
+            element: <Option />,
+          },
+          {
+            path: "account/account_info",
+            element: <AccountInfo />,
+          },
+          {
+            path: "account/password",
+            element: <ChangePassword />,
+          },
+          {
+            path: "privacy_and_safety",
+            element: <Option />,
+          },
+          {
+            path: "privacy_and_safety/blocked_accounts",
+            element: <BlockedUsers />,
+          },
+        ],
       },
       {
         path: "post",
