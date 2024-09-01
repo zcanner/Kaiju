@@ -1,5 +1,4 @@
 import { BsThreeDots } from "react-icons/bs";
-import { useMutation } from "@tanstack/react-query";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaArrowLeft, FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
@@ -10,7 +9,7 @@ import useUser from "../../lib/hooks/query/getUser";
 import InteractionBar from "./interactionBar.component";
 import ReplyCoponnent from "./comment/reply.componnent";
 
-import axios from "axios";
+import useBlockUserMutation from "../../lib/hooks/mutate/blockUnblockUser";
 
 const Post = () => {
   const navigate = useNavigate();
@@ -21,28 +20,7 @@ const Post = () => {
 
   const { data: user } = useUser();
 
-  const { mutate } = useMutation({
-    mutationFn: async () => {
-      try {
-        const res = await axios.post(
-          `http://localhost:3000/api/user/block?u=${post.author.username}`,
-          null,
-          {
-            withCredentials: true,
-          }
-        );
-
-        if (res.status !== 200) throw new Error("Failed to block user");
-
-        if (res.status === 200) {
-          navigate(-1);
-        }
-        return res.data;
-      } catch (error) {
-        console.error("Error in blockUser:", error);
-      }
-    },
-  });
+  const { mutate } = useBlockUserMutation();
 
   if (isLoading) return <h1>Loading</h1>;
 
@@ -108,7 +86,10 @@ const Post = () => {
                   </a>
                 </li>
                 <li>
-                  <a onClick={() => mutate()} className="text-error">
+                  <a
+                    onClick={() => mutate(post?.author.username)}
+                    className="text-error"
+                  >
                     {user?.userDoc?.blockedUsers?.includes(post?.author._id)
                       ? "unblock"
                       : "block"}{" "}
