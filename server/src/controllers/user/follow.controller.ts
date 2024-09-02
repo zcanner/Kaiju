@@ -6,7 +6,7 @@ import User from "../../schemas/user.schema.js";
 const follow = async (req: Request, res: Response) => {
   try {
     const { me } = req.body;
-    const u = req.query.u;
+    const u = req.query.user;
 
     if (u === me) throw new Error("You cannot follow yourself");
 
