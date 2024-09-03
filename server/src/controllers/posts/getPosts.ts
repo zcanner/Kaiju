@@ -39,6 +39,7 @@ const getPosts = async (req: Request, res: Response) => {
           $and: [
             { _id: { $nin: user.blockedUsers } },
             { blockedUsers: { $ne: user._id } },
+						{ private : false } || { _id: { $in: user.following } }
           ],
         },
       })
