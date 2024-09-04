@@ -1,21 +1,21 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
-import mongoose from "mongoose";
-import User from "../../schemas/user.schema.js";
+import mongoose from 'mongoose';
+import User from '../../schemas/user.schema.js';
 
 const blockeUser = async (req: Request, res: Response) => {
   try {
     const user = res.locals.user;
-    const u = req.query.u;
-    if (u === user.username) throw new Error("You cannot block yourself");
+    const u = req.query.user;
+    if (u === user.username) throw new Error('You cannot block yourself');
 
     const userToBlock = await User.findOne({ username: u });
-    if (!userToBlock) throw new Error("User not found");
+    if (!userToBlock) throw new Error('User not found');
 
     // check if user is already blocked, if yes then unblock
     if (user.blockedUsers.includes(userToBlock._id)) {
       user.blockedUsers.pull(userToBlock._id);
-      res.status(200).send("User unblocked successfully");
+      res.status(200).send('User unblocked successfully');
       return await user.save();
     }
 
@@ -24,8 +24,7 @@ const blockeUser = async (req: Request, res: Response) => {
 
     if (user.following.includes(userToBlock._id)) {
       user.following = user.following.filter(
-        (id: mongoose.Types.ObjectId) =>
-          id.toString() !== userToBlock._id.toString()
+        (id: mongoose.Types.ObjectId) => id.toString() !== userToBlock._id.toString()
       );
       await user.save();
     }
@@ -34,8 +33,7 @@ const blockeUser = async (req: Request, res: Response) => {
 
     if (user.followers.includes(userToBlock._id)) {
       user.followers = user.followers.filter(
-        (id: mongoose.Types.ObjectId) =>
-          id.toString() !== userToBlock._id.toString()
+        (id: mongoose.Types.ObjectId) => id.toString() !== userToBlock._id.toString()
       );
       await user.save();
     }
@@ -64,11 +62,11 @@ const blockeUser = async (req: Request, res: Response) => {
     user.blockedUsers.push(userToBlock._id);
     await user.save();
 
-    res.status(200).send("User blocked successfully");
+    res.status(200).send('User blocked successfully');
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : null;
-    console.log("Error Message form block user controller :", errorMessage);
-    res.status(500).send("Failed to block user");
+    console.log('Error Message form block user controller :', errorMessage);
+    res.status(500).send('Failed to block user');
   }
 };
 
