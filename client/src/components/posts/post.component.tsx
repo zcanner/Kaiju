@@ -1,15 +1,14 @@
-import { BsThreeDots } from "react-icons/bs";
-import { RiVerifiedBadgeFill } from "react-icons/ri";
-import { useNavigate, useParams } from "react-router-dom";
-import { FaArrowLeft, FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
+import { useContext } from 'react';
+import { AuthContext } from '../../app';
 
-import usePost from "../../lib/hooks/query/usePost";
-import useUser from "../../lib/hooks/query/getUser";
+import { RiVerifiedBadgeFill } from 'react-icons/ri';
+import { useNavigate, useParams } from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa';
 
-import InteractionBar from "./interactionBar.component";
-import ReplyCoponnent from "./comment/reply.componnent";
-
-import useBlockUserMutation from "../../lib/hooks/mutate/blockUnblockUser";
+import usePost from '../../lib/hooks/query/usePost';
+import InteractionBar from './interactionBar.component';
+import ReplyCoponnent from './comment/reply.componnent';
+import ThreeDotOptions from './threeDotOptions.component';
 
 const Post = () => {
   const navigate = useNavigate();
@@ -18,119 +17,78 @@ const Post = () => {
   const { data, isLoading } = usePost(postID!);
   const post = data?.post;
 
-  const { data: user } = useUser();
-
-  const { mutate } = useBlockUserMutation();
+  const { data: user } = useContext(AuthContext);
 
   if (isLoading) return <h1>Loading</h1>;
 
   return (
     <>
-      <div className="p-3 items-center ">
-        <div className="flex gap-2">
-          <div
-            onClick={() => navigate(-1)}
-            className="btn btn-sm btn-ghost btn-circle"
-          >
+      <div className='p-3 items-center '>
+        <div className='flex gap-2'>
+          <div onClick={() => navigate(-1)} className='btn btn-sm btn-ghost btn-circle'>
             <FaArrowLeft />
           </div>
-          <div className="w-full sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
-            <h1 className="text-2xl font-semibold break-words">Post</h1>
+          <div className='w-full sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl'>
+            <h1 className='text-2xl font-semibold break-words'>Post</h1>
           </div>
         </div>
       </div>
-      <div className="p-4">
-        <div className="w-full">
-          <div className="flex gap-2">
+      <div className='p-4'>
+        <div className='w-full'>
+          <div className='flex gap-2'>
             <div>
-              <div className="avatar">
-                <div className="w-12 rounded-full">
+              <div className='avatar'>
+                <div className='w-12 rounded-full'>
                   <img
                     onClick={() => navigate(`/${post.author.username}`)}
                     src={post.author.profileimg}
-                    alt="Profile"
-                    className="cursor-pointer"
+                    alt='Profile'
+                    className='cursor-pointer'
                   />
                 </div>
               </div>
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <h3 className="font-semibold">{post.author.fullname}</h3>
+              <div className='flex items-center gap-2'>
+                <h3 className='font-semibold'>{post.author.fullname}</h3>
                 {post.author.verified && <RiVerifiedBadgeFill />}
               </div>
-              <h3 className="label-text">@{post.author.username}</h3>
+              <h3 className='label-text'>@{post.author.username}</h3>
             </div>
-            <div className="dropdown dropdown-top dropdown-end ml-auto">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-sm btn-ghost btn-circle"
-              >
-                <BsThreeDots />
-              </div>
-              <ul
-                tabIndex={1}
-                className="dropdown-content menu bg-primarybg border rounded-box z-[1] w-52 p-2 shadow"
-              >
-                <li>
-                  <a className="text-error">
-                    <FaRegTrashAlt />
-                    Delete
-                  </a>
-                </li>
-                <li>
-                  <a>
-                    <FaPencilAlt />
-                    Edit
-                  </a>
-                </li>
-                <li>
-                  <a
-                    onClick={() => mutate(post?.author.username)}
-                    className="text-error"
-                  >
-                    {user?.userDoc?.blockedUsers?.includes(post?.author._id)
-                      ? "unblock"
-                      : "block"}{" "}
-                    {post.author.username}
-                  </a>
-                </li>
-              </ul>
-            </div>
+            <ThreeDotOptions post={post} user={user} />
           </div>
         </div>
         <div>
-          <div className="p-2">
+          <div className='p-2'>
             <p>{post.content}</p>
           </div>
         </div>
-        <div className="max-w-xl">
+        <div className='max-w-xl'>
           <div>
             {post.image && (
               <img
-                className="w-full rounded-2xl border-ghostbg border-2 p-1"
+                className='w-full rounded-2xl border-ghostbg border-2 p-1'
                 src={post.image}
-                alt="image"
+                alt='image'
               />
             )}
           </div>
         </div>
         <div>
-          <div className="pt-2 px-2">
-            <p className="label-text">
-              {new Date(post.createdAt).toLocaleString("en-US", {
-                hour: "numeric",
-                minute: "numeric",
-                weekday: "short",
-                year: "numeric",
-                month: "short",
-                day: "numeric",
+          <div className='pt-2 px-2'>
+            <p className='label-text'>
+              {new Date(post.createdAt).toLocaleString('en-US', {
+                hour: 'numeric',
+                minute: 'numeric',
+                weekday: 'short',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
               })}
             </p>
           </div>
         </div>
-        <div className="px-2 my-2 border-y border-ghostbg">
+        <div className='px-2 my-2 border-y border-ghostbg'>
           <InteractionBar post={post} />
         </div>
       </div>

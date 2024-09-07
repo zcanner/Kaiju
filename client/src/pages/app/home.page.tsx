@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import CreatePost from '../../components/home/createpost.component';
 import Posts from '../../components/posts/posts.component';
 
-import useUser from '../../lib/hooks/query/getUser';
+import { AuthContext } from '../../app';
 import usePosts from '../../lib/hooks/query/usePosts';
 
 const Home = () => {
-  const { data } = useUser();
+  const { data } = useContext(AuthContext);
   // TODO : merge with usePost hook
   const [active, setActive] = useState('For You');
   const { data: post, refetch } = usePosts(active);
