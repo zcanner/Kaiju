@@ -48,6 +48,7 @@ const useEditPost = (updatedData: updatedData) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['posts', updatedData.postID] });
+      (document.getElementById('edit-post') as HTMLDialogElement)?.close();
     },
   });
 };

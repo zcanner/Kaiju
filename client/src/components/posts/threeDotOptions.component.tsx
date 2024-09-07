@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import { BsThreeDots } from 'react-icons/bs';
 import { RiUserFollowLine } from 'react-icons/ri';
@@ -10,7 +10,15 @@ import { useDeletePost } from '../../lib/hooks/mutate/postMutation';
 import useBlockUserMutation from '../../lib/hooks/mutate/blockUnblockUser';
 import useFollowUnfollowMuatation from '../../lib/hooks/mutate/followUnfollow';
 
-const ThreeDotOptions = ({ post, user }: { post: any; user: any }) => {
+type ThreeDotOptionsProps = {
+  post: any;
+  user: any;
+  setPostData?: React.Dispatch<
+    React.SetStateAction<{ content: string; image: string; postID: string }>
+  >;
+};
+
+const ThreeDotOptions = ({ post, user, setPostData }: ThreeDotOptionsProps) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const { mutate: deleteFun } = useDeletePost();
 
@@ -24,8 +32,11 @@ const ThreeDotOptions = ({ post, user }: { post: any; user: any }) => {
     return () => deleteFun(postID);
   };
 
-  const showPostEditDialoge = () => {
-    (document.getElementById('edit-post') as HTMLDialogElement)?.showModal();
+  const showPostEditDialoge = (content: string, image: any, postID: string) => {
+    return () => {
+      if (setPostData) setPostData({ content, image, postID });
+      (document.getElementById('edit-post') as HTMLDialogElement)?.showModal();
+    };
   };
 
   const { mutate: blockUserFN } = useBlockUserMutation();
@@ -52,7 +63,11 @@ const ThreeDotOptions = ({ post, user }: { post: any; user: any }) => {
 
   const ownPostOptions = [
     { name: 'Delete', icon: <FaRegTrashAlt />, onClick: handlePostDelete(post._id) },
-    { name: 'Edit post', icon: <FaPencilAlt />, onClick: showPostEditDialoge },
+    {
+      name: 'Edit post',
+      icon: <FaPencilAlt />,
+      onClick: showPostEditDialoge(post.content, post.image, post._id),
+    },
   ];
 
   const otherUserPostOptions = [

@@ -1,10 +1,10 @@
-import axios from "axios";
-import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from 'axios';
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { AuthContext } from "../../app";
-import { TPost } from "../../types/index.types";
+import { AuthContext } from '../../app';
+import { TPost } from '../../types/index.types';
 
 import {
   FaRegComment,
@@ -13,7 +13,7 @@ import {
   FaRegEye,
   FaRegBookmark,
   FaHeart,
-} from "react-icons/fa";
+} from 'react-icons/fa';
 
 const InteractionBar = ({ post }: { post: TPost }) => {
   const [postID] = useState(post._id);
@@ -44,10 +44,10 @@ const InteractionBar = ({ post }: { post: TPost }) => {
   };
 
   const { mutate } = useMutation({
-    mutationKey: ["like", postID],
+    mutationKey: ['like', postID],
     mutationFn: toggleLike,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      queryClient.invalidateQueries({ queryKey: ['posts'] });
     },
     onError: (error) => {
       console.log(error);
@@ -65,7 +65,7 @@ const InteractionBar = ({ post }: { post: TPost }) => {
       return res.data;
     },
     onSuccess() {
-      queryClient.invalidateQueries({ queryKey: ["saved"] });
+      queryClient.invalidateQueries({ queryKey: ['saved'] });
     },
   });
 
@@ -76,60 +76,55 @@ const InteractionBar = ({ post }: { post: TPost }) => {
 
   const navigate = useNavigate();
   return (
-    <div className="py-3">
-      <div className="flex gap-4 items-center">
+    <div className='py-3'>
+      <div className='flex gap-4 items-center'>
         <div>
-          <div className="flex items-center gap-1 hover:text-error label-text">
+          <div className='flex items-center gap-1 hover:text-error label-text'>
             <div
               onClick={handleClick}
-              className="btn btn-circle btn-sm hover:bg-error hover:bg-opacity-10 btn-ghost text-lg"
-            >
+              className='btn btn-circle btn-sm hover:bg-error hover:bg-opacity-10 btn-ghost text-lg'>
               {post.likes?.includes(user?.user._id) ? (
-                <FaHeart className="fill-error" />
+                <FaHeart className='fill-error' />
               ) : (
                 <FaRegHeart />
               )}
             </div>
-            <span className="text-sm font-normal ">
+            <span className='text-sm font-normal '>
               {post.likes?.length || 0} {/* update it later  */}
             </span>
           </div>
         </div>
         <div>
-          <div className="flex items-center gap-1 hover:text-success label-text">
+          <div className='flex items-center gap-1 hover:text-success label-text'>
             <div
-              onClick={() =>
-                navigate(`/post/${post.author?.username}/${post._id}`)
-              }
-              className="btn btn-circle btn-sm btn-ghost hover:bg-success hover:bg-opacity-10  text-lg"
-            >
+              onClick={() => navigate(`/post/${post.author?.username}/${post._id}`)}
+              className='btn btn-circle btn-sm btn-ghost hover:bg-success hover:bg-opacity-10  text-lg'>
               <FaRegComment />
             </div>
-            <span className="text-sm font-normal ">{post.comments}</span>
+            <span className='text-sm font-normal '>{post.comments}</span>
           </div>
         </div>
         <div>
-          <div className="flex items-center gap-1 hover:text-warning label-text">
-            <div className="btn btn-circle btn-sm btn-ghost hover:bg-warning hover:bg-opacity-10  text-lg">
+          <div className='flex items-center gap-1 hover:text-warning label-text'>
+            <div className='btn btn-circle btn-sm btn-ghost hover:bg-warning hover:bg-opacity-10  text-lg'>
               <FaRegShareSquare />
             </div>
-            <span className="text-sm font-normal ">0</span>
+            <span className='text-sm font-normal '>0</span>
           </div>
         </div>
         <div>
-          <div className="flex items-center gap-1 hover:text-purple-500 label-text">
-            <div className="btn btn-circle btn-sm btn-ghost hover:bg-purple-500 hover:bg-opacity-10 text-lg">
+          <div className='flex items-center gap-1 hover:text-purple-500 label-text'>
+            <div className='btn btn-circle btn-sm btn-ghost hover:bg-purple-500 hover:bg-opacity-10 text-lg'>
               <FaRegEye />
             </div>
-            <span className="text-sm font-normal ">{post.views}</span>
+            <span className='text-sm font-normal '>{post.views}</span>
           </div>
         </div>
-        <div className="ml-auto">
-          <div className="hover:text-blue-500 label-text">
+        <div className='ml-auto'>
+          <div className='hover:text-blue-500 label-text'>
             <div
               onClick={() => save()}
-              className="btn btn-circle btn-xs btn-ghost hover:bg-blue-500 hover:bg-opacity-10 text-lg"
-            >
+              className='btn btn-circle btn-xs btn-ghost hover:bg-blue-500 hover:bg-opacity-10 text-lg'>
               <FaRegBookmark />
             </div>
           </div>

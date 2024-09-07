@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../../app';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,7 +11,11 @@ import ThreeDotOptions from './threeDotOptions.component';
 const Posts = ({ post, isLoading, isRefetching }: any) => {
   const navigate = useNavigate();
   const { data: user } = useContext(AuthContext);
-
+  const [postData, setPostData] = useState({
+    content: '',
+    image: '',
+    postID: '',
+  });
   const data = post?.posts;
 
   if (isLoading || isRefetching) {
@@ -23,6 +27,8 @@ const Posts = ({ post, isLoading, isRefetching }: any) => {
       </div>
     );
   }
+
+  console.log(postData);
 
   return (
     <>
@@ -58,19 +64,7 @@ const Posts = ({ post, isLoading, isRefetching }: any) => {
                 })}
               </span>
               {/* cut code was here */}
-              <ThreeDotOptions post={post} user={user} />
-              <dialog id='edit-post' className='modal'>
-                <div className='modal-box bg-primarybg'>
-                  <form method='dialog'>
-                    {/* if there is a button in form, it will close the modal */}
-                    <button className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>
-                      ✕
-                    </button>
-                  </form>
-                  <CreatePost user={user} />
-                  <p className='label-text'>Uploadig new image will replace older image.</p>
-                </div>
-              </dialog>
+              <ThreeDotOptions setPostData={setPostData} post={post} user={user} />
             </div>
 
             <div id='content'>
@@ -90,6 +84,16 @@ const Posts = ({ post, isLoading, isRefetching }: any) => {
           </div>
         </div>
       ))}
+      <dialog id='edit-post' className='modal'>
+        <div className='modal-box bg-primarybg'>
+          <form method='dialog'>
+            {/* if there is a button in form, it will close the modal */}
+            <button className='btn btn-sm btn-circle btn-ghost absolute right-2 top-2'>✕</button>
+          </form>
+          <CreatePost postData={postData} componentType={'edit'} user={user} />
+          <p className='label-text'>Uploadig new image will replace older image.</p>
+        </div>
+      </dialog>
     </>
   );
 };
