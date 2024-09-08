@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import User from "../../schemas/user.schema";
+import { Request, Response } from 'express';
+import User from '../../schemas/user.schema';
 
 /**
  * Updates the email of a user.
@@ -11,25 +11,32 @@ import User from "../../schemas/user.schema";
  */
 const updateEmail = async (req: Request, res: Response) => {
   try {
-    const { newEmail, password } = req.body;
+    const { email, password } = req.body;
     const { user } = res.locals;
 
     const foundUser = await User.findById(user._id);
-    if (!foundUser) throw new Error("User not found");
+    if (!foundUser) throw new Error('User not found');
 
     const isPasswordValid = foundUser.password === password;
 
     if (!isPasswordValid) {
-      throw new Error("Password is incorrect");
+      throw new Error('Password is incorrect');
     }
 
-    if (foundUser.email === newEmail) {
-      throw new Error("New email cannot be the same as the old email");
+    if (foundUser.email === email) {
+      throw new Error('New email cannot be the same as the old email');
     }
 
-    foundUser.email = newEmail;
+    // now lets check if any account with new email already exists
+    // in the database
+    const emailExists = await User.findOne({ email });
+    if (emailExists) {
+      throw new Error('Email already exists');
+    }
+
+    foundUser.email = email;
     await foundUser.save();
-    res.status(200).json({ message: "Password changed successfully" });
+    res.status(200).json({ message: 'Email changed successfully' });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : null;
     res.status(500).json({ error: errorMessage });
