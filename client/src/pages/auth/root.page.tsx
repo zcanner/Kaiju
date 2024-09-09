@@ -1,6 +1,7 @@
-import { FaDiscord, FaGoogle } from "react-icons/fa6";
 import logo from "/Logo_white_trans.svg";
 import { useNavigate } from "react-router-dom";
+
+import { FaDiscord, FaGoogle } from "react-icons/fa6";
 
 const RootPage = () => {
   const navigate = useNavigate();
@@ -24,12 +25,12 @@ const RootPage = () => {
 						items-center max-w-md"
           >
             <div className="w-full p-1 max-w-xs">
-              <button className="btn w-full rounded-full max-w-xs btn-neutral">
+              <button className="btn w-full rounded-full max-w-xs ghost">
                 <FaGoogle className="text-xl" /> Google
               </button>
             </div>
             <div className="w-full p-1 max-w-xs">
-              <button className="btn w-full rounded-full max-w-xs btn-neutral">
+              <button className="btn w-full rounded-full max-w-xs ghost">
                 <FaDiscord className="text-xl" /> Discord
               </button>
             </div>

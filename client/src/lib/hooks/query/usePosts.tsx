@@ -1,20 +1,24 @@
-import { useQuery } from "@tanstack/react-query";
+import axios from 'axios';
+import { useQuery } from '@tanstack/react-query';
 
+// TODO : use this to fetch user posts on user profile page.
 const usePosts = (query?: string, pID?: string) => {
   return useQuery({
-    queryKey: ["posts"],
+    queryKey: ['posts'],
     queryFn: async () => {
-      const res = await fetch(
-        `http://localhost:3000/api/fun/get-posts?t=${query}&pID=${pID}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
+      try {
+        const res = await axios.get(`http://localhost:3000/api/fun/get-posts`, {
+          withCredentials: true,
+          params: {
+            t: query,
+            pID: pID,
           },
-          credentials: "include",
-        }
-      );
-      return res.json();
+        });
+        if (res.data.error) throw new Error(res.data.error);
+        return res.data;
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 };

@@ -9,7 +9,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #121212;
+  background-color: #171311;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -17,16 +17,23 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-
 .ghost {
   border-color: transparent;
-  background-color: var(--fallback-bc,oklch(var(--bc)/0.2));
+  background-color: var(--fallback-bc, oklch(var(--bc) / 0.2));
 }
 
 .ghost:hover {
-	background-color: var(--fallback-bc,oklch(var(--bc)/0.3));
+  background-color: var(--fallback-bc, oklch(var(--bc) / 0.3));
 }
 
 .ghost:active {
-	background-color: var(--fallback-bc,oklch(var(--bc)/0.4));
+  background-color: var(--fallback-bc, oklch(var(--bc) / 0.4));
+}
+
+.pButton {
+  @apply btn btn-primary bg-opacity-20 text-primary hover:bg-opacity-45 border-none text-opacity-80 rounded-full btn-sm font-semibold;
+}
+
+.pButton:disabled {
+  @apply text-primary border-none text-opacity-80 rounded-full btn-sm font-semibold;
 }

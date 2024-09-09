@@ -1,6 +1,6 @@
+import { v2 } from "cloudinary";
 import { Request, Response } from "express";
 import User from "../../schemas/user.schema.js";
-import { v2 } from "cloudinary";
 
 const updateUser = async (req: Request, res: Response) => {
   try {

@@ -12,7 +12,7 @@ const status = async (req: Request, res: Response) => {
     ) as JwtPayload;
 
     const user = await User.findOne({ _id: verify.id }).select(
-      "-password -email"
+      "-password -__v"
     );
 
     verify ? res.json({ isAuth: true, user }) : res.json({ isAuth: false });

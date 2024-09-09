@@ -1,16 +1,17 @@
-import { CiImageOn } from "react-icons/ci";
-import { IoClose } from "react-icons/io5";
+import { useEffect, useRef, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
-import { useQueryClient } from "@tanstack/react-query";
-import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { CiImageOn } from 'react-icons/ci';
+import { IoClose } from 'react-icons/io5';
 
-import { TPost } from "../../../types/index.types";
-import useCreatePost from "../../../lib/hooks/mutate/useCreatePost";
+import { TPost } from '../../../types/index.types';
+import useCreatePost from '../../../lib/hooks/mutate/useCreatePost';
 
 const ReplyCoponnent = ({ user, post }: any) => {
+  const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [data, setData] = useState<TPost>({
-    content: "",
+    content: '',
     image: null,
     affiliatedPost: post._id,
     isReply: true,
@@ -28,9 +29,14 @@ const ReplyCoponnent = ({ user, post }: any) => {
   };
 
   useEffect(() => {
+    if (data.content.length > 0) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
     if (textareaRef.current) {
-      textareaRef.current.style.height = "40px";
-      textareaRef.current.style.maxHeight = "60vh";
+      textareaRef.current.style.height = '40px';
+      textareaRef.current.style.maxHeight = '60vh';
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }, [data.content]);
@@ -48,8 +54,8 @@ const ReplyCoponnent = ({ user, post }: any) => {
 
   const { mutate, isError, isPending } = useCreatePost({
     onSuccess: () => {
-      setData({ content: "", image: null });
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      setData({ ...data, content: '', image: null });
+      queryClient.invalidateQueries({ queryKey: ['posts'] });
     },
   });
 
@@ -57,46 +63,45 @@ const ReplyCoponnent = ({ user, post }: any) => {
     mutate(data);
   };
 
+  const userData = user?.user;
   return (
-    <div className="border-b border-ghostbg">
+    <div className='border-b border-ghostbg'>
       {isFocused ? (
-        <div className="flex px-2 gap-2 items-start border-b border-ghostbg w-full max-w-xl ">
-          <div className="avatar">
-            <div className="w-11 rounded-full">
+        <div className='flex px-2 gap-2 items-start border-b border-ghostbg w-full max-w-xl '>
+          <div className='avatar'>
+            <div className='w-11 rounded-full'>
               <img
-                onClick={() => navigate(`/${user?.userDoc?.username}`)}
-                className="cursor-pointer"
-                src={user?.userDoc?.profileimg}
-                alt="Profile"
+                onClick={() => navigate(`/${userData?.username}`)}
+                className='cursor-pointer'
+                src={userData?.profileimg}
+                alt='Profile'
               />
             </div>
           </div>
-          <div className="flex flex-col w-full">
+          <div className='flex flex-col w-full'>
             <textarea
               ref={textareaRef}
-              className="textarea w-full max-w-xl p-2 h-12 text-lg resize-none border-none bg-transparent focus:outline-none border-gray-800"
-              placeholder={`What is your thought on this, ${
-                user?.userDoc?.fullname.split(" ")[0]
-              }?`}
+              className='textarea w-full max-w-xl p-2 h-12 text-lg resize-none border-none bg-transparent focus:outline-none border-gray-800'
+              placeholder={`What is your thought on this, ${userData?.fullname.split(' ')[0]}?`}
               value={data.content}
-              role="combobox"
+              role='combobox'
               autoFocus={true}
-              aria-expanded="false"
+              aria-expanded='false'
               onChange={(e) => {
                 setData({ ...data, content: e.target.value });
               }}
             />
             {data.image && (
-              <div className="relative w-full p-2 mx-auto">
+              <div className='relative w-full p-2 mx-auto'>
                 {data.image && (
-                  <div className="relative w-full">
-                    <div className="absolute bg-gray-800 opacity-85 rounded-full top-1 right-1 flex justify-center items-center w-8 h-8 cursor-pointer hover:bg-gray-700">
+                  <div className='relative w-full'>
+                    <div className='absolute bg-gray-800 opacity-85 rounded-full top-1 right-1 flex justify-center items-center w-8 h-8 cursor-pointer hover:bg-gray-700'>
                       <IoClose
-                        className="text-white text-lg"
+                        className='text-white text-lg'
                         onClick={() => {
                           setData({ ...data, image: null });
                           if (imgRef.current) {
-                            imgRef.current.value = "";
+                            imgRef.current.value = '';
                           }
                         }}
                       />
@@ -104,66 +109,58 @@ const ReplyCoponnent = ({ user, post }: any) => {
 
                     <img
                       src={data.image}
-                      className="w-full rounded-xl mx-auto object-contain"
-                      alt="Selected Image"
+                      className='w-full rounded-xl mx-auto object-contain'
+                      alt='Selected Image'
                     />
                   </div>
                 )}
               </div>
             )}
-            <div className="flex justify-between my-2">
-              <div className="flex px-2 content-center items-center">
+            <div className='flex justify-between my-2'>
+              <div className='flex px-2 content-center items-center'>
                 <CiImageOn
                   onClick={() => imgRef.current?.click()}
-                  className="size-6 cursor-pointer"
+                  className='size-6 cursor-pointer'
                 />
               </div>
-              <div className="content-center items-center">
+              <div className='content-center items-center'>
                 <input
                   ref={imgRef}
                   onChange={handleImgChange}
-                  type="file"
+                  type='file'
                   hidden
-                  accept="image/*"
+                  accept='image/*'
                 />
-                <button
-                  onClick={hadnleClick}
-                  className="btn btn-primary text-center rounded-full btn-sm"
-                >
-                  {isPending ? "Replying..." : "Reply"}
+                <button disabled={isDisabled} onClick={hadnleClick} className='pButton'>
+                  {isPending ? 'Replying...' : 'Reply'}
                 </button>
               </div>
             </div>
-            {isError && <div className="text-error">Something went wrong</div>}
+            {isError && <div className='text-error'>Something went wrong</div>}
           </div>
         </div>
       ) : (
-        <div
-          onFocus={handleFocus}
-          className="flex px-2 pb-4 items-center gap-2"
-        >
-          <div className="w-auto">
-            <div className="avatar">
-              <div className="w-11 rounded-full">
+        <div onFocus={handleFocus} className='flex px-2 pb-4 items-center gap-2'>
+          <div className='w-auto'>
+            <div className='avatar'>
+              <div className='w-11 rounded-full'>
                 <img
-                  onClick={() => navigate(`/${user?.userDoc?.username}`)}
-                  className="cursor-pointer"
-                  src={user?.userDoc?.profileimg}
-                  alt="Profile"
+                  onClick={() => navigate(`/${userData?.username}`)}
+                  className='cursor-pointer'
+                  src={userData?.profileimg}
+                  alt='Profile'
                 />
               </div>
             </div>
           </div>
           <textarea
             ref={textareaRef}
-            className="textarea w-full max-w-xl p-2 h-12 text-lg resize-none border-none bg-transparent focus:outline-none border-gray-800"
-            placeholder={`What is your thought on this, ${
-              user?.userDoc?.fullname.split(" ")[0]
-            }?`}
-            role="combobox"
-            aria-expanded="false"
+            className='textarea w-full max-w-xl p-2 h-12 text-lg resize-none border-none bg-transparent focus:outline-none border-gray-800'
+            placeholder={`What is your thought on this, ${userData?.fullname.split(' ')[0]}?`}
+            role='combobox'
+            aria-expanded='false'
           />
-          <button className="btn btn-primary text-center rounded-full btn-sm">
+          <button disabled={isDisabled} className='pButton'>
             Reply
           </button>
         </div>

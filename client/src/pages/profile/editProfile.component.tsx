@@ -1,10 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
-import { FaArrowLeft, FaPencilAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import { useUser } from "../../lib/hooks/query/getUser";
-import { RiVerifiedBadgeFill } from "react-icons/ri";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { FaArrowLeft, FaPencilAlt } from "react-icons/fa";
+import { RiVerifiedBadgeFill } from "react-icons/ri";
+
+import useUser from "../../lib/hooks/query/getUser";
 
 const EditProfile = () => {
   const { data, isLoading } = useUser();

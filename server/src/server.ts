@@ -3,9 +3,9 @@ import "dotenv/config";
 import cors from "cors";
 import helmet from "helmet";
 import { v2 } from "cloudinary";
-import cookieParser from "cookie-parser";
-import path, { dirname } from "path";
 import { fileURLToPath } from "url";
+import path, { dirname } from "path";
+import cookieParser from "cookie-parser";
 
 import route from "./routes/routes.js";
 import connectDB from "./db/connectMongoDB.js";

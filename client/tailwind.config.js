@@ -8,7 +8,7 @@ export default {
       {
         dark: {
           ...require("daisyui/src/theming/themes")["dark"],
-          primary: "#16a34a",
+          primary: "#e8570c",
         },
       },
     ],
@@ -17,7 +17,7 @@ export default {
     extend: {
       colors: {
         ghostbg: "var(--fallback-bc,oklch(var(--bc)/0.2))",
-        primarybg: "#121212",
+        primarybg: "#171311",
       },
     },
   },

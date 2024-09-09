@@ -1,23 +1,27 @@
+import { useContext } from "react";
+import { AuthContext } from "../../app";
+
 import { GoHome, GoHomeFill } from "react-icons/go";
+import { IoMdNotificationsOutline, IoMdNotifications } from "react-icons/io";
+import { GiMonsterGrasp } from "react-icons/gi";
+import { FaRegBookmark, FaBookmark } from "react-icons/fa";
+import { FaRegUser, FaUser } from "react-icons/fa6";
+import { IoSettingsOutline, IoSettingsSharp } from "react-icons/io5";
+import { LuActivitySquare } from "react-icons/lu";
+import { Link, useLocation } from "react-router-dom";
+import { RiLogoutCircleLine } from "react-icons/ri";
 import {
   MdOutlineExplore,
   MdExplore,
   MdOutlineEmail,
   MdEmail,
 } from "react-icons/md";
-import { IoMdNotificationsOutline, IoMdNotifications } from "react-icons/io";
-import { GiMonsterGrasp } from "react-icons/gi";
-import { FaRegBookmark, FaBookmark } from "react-icons/fa";
-import { FaRegUser, FaUser } from "react-icons/fa6";
-// import { RiLogoutCircleLine } from "react-icons/ri";
-import { IoSettingsOutline, IoSettingsSharp } from "react-icons/io5";
-import { LuActivitySquare } from "react-icons/lu";
 
-import { Link, useLocation } from "react-router-dom";
-
-const Sidebar = ({ user }: any) => {
+const Sidebar = () => {
   const location = useLocation();
   const currentPath = location.pathname;
+
+  const { data } = useContext(AuthContext);
 
   const links = [
     { to: "/home", defaultIcon: GoHome, activeIcon: GoHomeFill, label: "Home" },
@@ -52,7 +56,7 @@ const Sidebar = ({ user }: any) => {
       label: "Saved",
     },
     {
-      to: `/${user?.user.username}`,
+      to: `/${data?.user.username}`,
       defaultIcon: FaRegUser,
       activeIcon: FaUser,
       label: "Profile",

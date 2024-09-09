@@ -1,8 +1,9 @@
-import { FaDiscord, FaGoogle } from "react-icons/fa6";
-import logo from "/Logo_white_trans.svg";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import axios, { isAxiosError } from "axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import logo from "/Logo_white_trans.svg";
+import { FaDiscord, FaGoogle } from "react-icons/fa6";
 
 // Define the type for form data
 type FormData = {

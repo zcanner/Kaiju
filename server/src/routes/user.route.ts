@@ -19,7 +19,7 @@ user.post("/updateFollowStatus", protectedRoute, protectUserMiddleware, follow);
 
 user.get("/", protectUserMiddleware, getUser);
 
-user.get("/posts/:author", getUserPosts);
+user.get("/posts/:author", protectUserMiddleware, getUserPosts);
 
 user.post("/block", protectedRoute, blockUser);
 
